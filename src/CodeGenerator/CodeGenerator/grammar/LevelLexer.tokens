@@ -1,0 +1,8 @@
+Separator=1
+LineBreak=2
+SimpleValue=3
+BracketOpen=4
+BracketClose=5
+WS=6
+'('=4
+')'=5
