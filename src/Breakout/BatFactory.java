@@ -6,7 +6,6 @@ import com.almasb.fxgl.entity.Entities;
 import com.almasb.fxgl.entity.GameEntity;
 import com.almasb.fxgl.entity.component.CollidableComponent;
 import com.almasb.fxgl.physics.BoundingShape;
-import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import org.jbox2d.dynamics.BodyType;
 
@@ -40,8 +39,8 @@ public class BatFactory {
                 .type(Breakout.Type.BAT)
                 .at(x,y)
                 .rotate(0)
-                .bbox(new HitBox("BatHitBox", Box))
-                .viewFromTexture(batTexture)
+                //.bbox(new HitBox("BatHitBox", Box))
+                .viewFromTextureWithBBox(batTexture)
                 .build();
 
         batPhysics = new PhysicsComponent();

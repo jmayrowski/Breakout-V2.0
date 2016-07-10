@@ -46,7 +46,7 @@ public class Breakout extends GameApplication {
     /*private PhysicsComponent viewComponent;
     private PhysicsComponent ball;*/
 
-    private GameEntity bat;
+
 
     private PhysicsComponent batPhysics;
     private PhysicsComponent ballPhysics;
@@ -62,6 +62,7 @@ public class Breakout extends GameApplication {
     public static double ApplicationWidth;
     public static double ApplicationHeight;
     public static GameWorld gameWorld;
+    public static Entity bat;
 
     private ArrayList<GameEntity> playField;
 
@@ -246,7 +247,7 @@ public class Breakout extends GameApplication {
         ApplicationWidth = getWidth();
         ApplicationHeight = getHeight();
         BatFactory bf = new BatFactory();
-        Entity bat = bf.createBat(ApplicationWidth / 2 - 135 / 2, ApplicationHeight - 32, batTexture);
+        bat = bf.createBat(ApplicationWidth / 2 - 135 / 2, ApplicationHeight - 32, batTexture);
         getGameWorld().addEntities(bat);
 
         batControl = bat.getControlUnsafe(BatControl.class);
