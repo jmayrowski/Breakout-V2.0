@@ -1,8 +1,11 @@
 package Breakout.Control;
 
+import Breakout.BatFactory;
+import Breakout.Breakout;
 import com.almasb.ents.AbstractControl;
 import com.almasb.ents.Entity;
 import com.almasb.fxgl.entity.component.BoundingBoxComponent;
+import com.almasb.fxgl.entity.component.MainViewComponent;
 import com.almasb.fxgl.entity.component.PositionComponent;
 import com.almasb.fxgl.physics.PhysicsComponent;
 
@@ -12,14 +15,18 @@ import com.almasb.fxgl.physics.PhysicsComponent;
 public class BatControl extends AbstractControl {
 
     protected PositionComponent position;
-    protected PhysicsComponent bat;
-    protected BoundingBoxComponent bbox;
+    protected PhysicsComponent batPhysics;
+    protected BoundingBoxComponent bbc;
+    protected MainViewComponent viewComponent;
+
+    //protected String BatTexture;
 
     @Override
     public void onAdded(Entity entity) {
-        bat = entity.getComponentUnsafe(PhysicsComponent.class);
+        batPhysics = entity.getComponentUnsafe(PhysicsComponent.class);
         position = entity.getComponentUnsafe(PositionComponent.class);
-        bbox = entity.getComponentUnsafe(BoundingBoxComponent.class);
+        bbc = entity.getComponentUnsafe(BoundingBoxComponent.class);
+        viewComponent = entity.getComponentUnsafe(MainViewComponent.class);
     }
 
     @Override
@@ -27,17 +34,92 @@ public class BatControl extends AbstractControl {
 
     public void left() {
 
-            bat.setLinearVelocity(-10, 0);
+        if(batPhysics != null){
+
+            batPhysics.setLinearVelocity(-10, 0);
+        }
+
 
     }
 
     public void right() {
 
-            bat.setLinearVelocity(10, 0);
+        if(batPhysics != null) {
 
+            batPhysics.setLinearVelocity(10, 0);
+
+        }
     }
 
     public void stop() {
-        bat.setLinearVelocity(0, 0);
+        batPhysics.setLinearVelocity(0, 0);
+    }
+
+    public void increaseBatWidth(){
+
+        if(viewComponent != null  ) {
+
+            double batWidth = viewComponent.getView().getBoundsInLocal().getWidth();
+
+            if(batWidth <= 135 ) {
+
+                bbc.clearHitBoxes();
+                viewComponent.getView().removeFromScene();
+                BatFactory bf = new BatFactory();
+
+
+                Entity bat = bf.createBat( position.getX() - (135 / 3), Breakout.ApplicationHeight - 30, "Bats/bat_black_big.png");
+                Breakout.gameWorld.addEntities(bat);
+                Breakout.batControl = bat.getControlUnsafe(BatControl.class);
+
+            }
+            else if(batWidth == 200) {
+
+                bbc.clearHitBoxes();
+                viewComponent.getView().removeFromScene();
+                BatFactory bf = new BatFactory();
+
+
+                Entity bat = bf.createBat( position.getX() - (300 / 3), Breakout.ApplicationHeight - 32, "Bats/bat_black_bigger.png");
+                Breakout.gameWorld.addEntities(bat);
+                Breakout.batControl = bat.getControlUnsafe(BatControl.class);
+
+            }
+            else if(batWidth == 350 ) {
+
+                bbc.clearHitBoxes();
+                viewComponent.getView().removeFromScene();
+                BatFactory bf = new BatFactory();
+
+
+                Entity bat = bf.createBat( position.getX() - 500 / 5  , Breakout.ApplicationHeight - 32, "Bats/bat_black_biggest.png");
+                Breakout.gameWorld.addEntities(bat);
+                Breakout.batControl = bat.getControlUnsafe(BatControl.class);
+
+            }
+        }
+    }
+
+    public void decreaseBatWidth(){
+
+        if(viewComponent != null){
+
+            double batWidth = viewComponent.getView().getBoundsInLocal().getWidth();
+
+            if(batWidth >= 135 ) {
+
+                bbc.clearHitBoxes();
+                viewComponent.getView().removeFromScene();
+
+                BatFactory bf = new BatFactory();
+
+
+                Entity bat = bf.createBat( position.getX() + batWidth / 2  , Breakout.ApplicationHeight - 32, "Bats/bat_black_mini.png");
+                Breakout.gameWorld.addEntities(bat);
+                Breakout.batControl = bat.getControlUnsafe(BatControl.class);
+
+            }
+        }
+
     }
 }

@@ -30,7 +30,9 @@ public class BallFactory {
     public static PhysicsComponent ballPhysics;
 
 
+
     public Entity createBall(double x, double y){
+
 
         BoundingShape Ball = box(27,27);
 
@@ -42,6 +44,7 @@ public class BallFactory {
                 .viewFromTextureWithBBox("Balls/ball_red.png")
                 .build();
 
+        //ball.addComponent(new TypeComponent());
 
         ball.addComponent(new CollidableComponent(true));
 

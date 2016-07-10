@@ -23,24 +23,30 @@ public class BatFactory {
         return bat;
     }
 
+    public void setBat(GameEntity bat) {
+        this.bat = bat;
+    }
+
     public static PhysicsComponent batPhysics;
 
 
-    public Entity createBat(double x, double y){
+
+    public Entity createBat(double x, double y, String batTexture){
         BoundingShape Box = box(135,30);
 
-        //HitBox hitBox = new HitBox("PlayerHitBox", new BoundingBox(0, 0, 135, 30))
         //Entity erstellen
+        bat = new GameEntity();
         bat = Entities.builder()
                 .type(Breakout.Type.BAT)
                 .at(x,y)
                 .rotate(0)
                 .bbox(new HitBox("BatHitBox", Box))
-                .viewFromTextureWithBBox("Bats/bat_black.png")
+                .viewFromTexture(batTexture)
                 .build();
 
         batPhysics = new PhysicsComponent();
         batPhysics.setBodyType(BodyType.KINEMATIC);
+
 
         bat.addComponent(batPhysics);
         bat.addComponent(new CollidableComponent(true));

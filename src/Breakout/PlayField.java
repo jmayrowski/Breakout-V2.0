@@ -22,7 +22,6 @@ public class PlayField {
     private GameEntity brick10;
     private GameEntity brick11;
 
-    private GameEntity playField;
 
     public ArrayList<GameEntity> getPlayField(){
 
@@ -42,7 +41,7 @@ public class PlayField {
         brick11 = bf.initBrick(13,3);
 
 
-        ArrayList<GameEntity> playField = new ArrayList<GameEntity>();
+        ArrayList<GameEntity> playField = new ArrayList<>();
 
         playField.add(brick0);
         playField.add(brick1);

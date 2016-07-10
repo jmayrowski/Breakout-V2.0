@@ -1,4 +1,4 @@
-grammar PlayField;
+grammar level;
 file : row row row row row row row EOF ;
 row : value Separator value Separator value Separator value Separator value Separator value Separator value (LineBreak | EOF) ;
 value : SimpleValue;

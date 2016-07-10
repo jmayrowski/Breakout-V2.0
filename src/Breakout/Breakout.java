@@ -11,6 +11,7 @@ import com.almasb.fxgl.entity.Entities;
 import com.almasb.fxgl.entity.GameEntity;
 import com.almasb.fxgl.entity.component.CollidableComponent;
 import com.almasb.fxgl.entity.component.TypeComponent;
+import com.almasb.fxgl.gameplay.GameWorld;
 import com.almasb.fxgl.input.ActionType;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.InputMapping;
@@ -19,10 +20,8 @@ import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.PhysicsWorld;
 import com.almasb.fxgl.settings.GameSettings;
-import com.almasb.fxgl.texture.Texture;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -30,7 +29,7 @@ import javafx.scene.text.Text;
 import java.util.ArrayList;
 
 
-public class Breakout extends GameApplication{
+public class Breakout extends GameApplication {
 
     /*public static Assets assets;
 
@@ -44,7 +43,7 @@ public class Breakout extends GameApplication{
         this.assets = assets;
     }*/
 
-    /*private PhysicsComponent bat;
+    /*private PhysicsComponent viewComponent;
     private PhysicsComponent ball;*/
 
     private GameEntity bat;
@@ -52,18 +51,22 @@ public class Breakout extends GameApplication{
     private PhysicsComponent batPhysics;
     private PhysicsComponent ballPhysics;
 
-    private Texture batTexture;
-    private Texture ballTexture;
-    private Texture brickTexture;
-    private Texture wallTexture;
+    private String batTexture;
+    private String ballTexture;
+    private String brickTexture;
+    private String wallTexture;
 
     private Text scoreText;
 
-    private BatControl batControl;
+    public static BatControl batControl;
+    public static double ApplicationWidth;
+    public static double ApplicationHeight;
+    public static GameWorld gameWorld;
 
     private ArrayList<GameEntity> playField;
 
     private IntegerProperty score = new SimpleIntegerProperty();
+
     public enum Type {
         BAT, BALL, BRICK, WALL, GROUND
     }
@@ -88,14 +91,19 @@ public class Breakout extends GameApplication{
         input.addInputMapping(new InputMapping("right", KeyCode.D));
 
     }
+
     @OnUserAction(name = "left", type = ActionType.ON_ACTION)
-        public void left() {
-        batControl.left();
+    public void left() {
+        if(batControl != null){
+            batControl.left();
+        }
     }
 
     @OnUserAction(name = "right", type = ActionType.ON_ACTION)
-        public  void right(){
-        batControl.right();
+    public void right() {
+        if(batControl != null){
+            batControl.right();
+        }
     }
 
     @OnUserAction(name = "left", type = ActionType.ON_ACTION_END)
@@ -113,15 +121,17 @@ public class Breakout extends GameApplication{
     protected void initAssets() {
 
 
-        ballTexture = getAssetLoader().loadTexture("Balls/ball_red.png");
-        batTexture = getAssetLoader().loadTexture("Bats/bat_black.png");
-        brickTexture = getAssetLoader().loadTexture("Bricks/brick_blue_small.png");
-        wallTexture = getAssetLoader().loadTexture("Walls/brick_red.png");
+        ballTexture = "Balls/ball_red.png";
+        batTexture = "Bats/bat_black.png";
+        brickTexture = "Bricks/brick_blue_small.png";
+        wallTexture = "Walls/brick_red.png";
 
     }
 
     @Override
     protected void initGame() {
+
+        gameWorld = getGameWorld();
 
         initWalls();
         initBat();
@@ -131,7 +141,6 @@ public class Breakout extends GameApplication{
         //initScreenBounds();
 
 
-
     }
 
     @Override
@@ -139,30 +148,30 @@ public class Breakout extends GameApplication{
         //Kollisionsabfrage zw. Ball und Brick
         PhysicsWorld physics = getPhysicsWorld();
 
-        physics.setGravity(0,1);
+        physics.setGravity(0, 1);
         physics.addCollisionHandler(new CollisionHandler(Type.BALL, Type.BRICK) {
             @Override
             public void onCollisionBegin(Entity a, Entity b) {
 
-                /**Hier wird bei der Kollisionsabfrage mit einem Ziegel die Richtung des Balls umgedreht
-                Das klappt weitestgehend auch, jedoch wird diese Prozedur oftmals doppelt durchgeführt,
-                weshalb der Ball dann einfach weiter fliegt**/
 
-                Point2D v = BallFactory.ballPhysics.getLinearVelocity();
-                double x = - v.getX();
-                double y = - v.getY();
-                BallFactory.ballPhysics.setLinearVelocity(x,y);
+                score.set(score.get() + 100);
+
+
 
             }
+
             @Override
             public void onCollision(Entity a, Entity b) {
 
 
             }
+
             @Override
             public void onCollisionEnd(Entity a, Entity b) {
+
                 b.removeFromWorld();
-                score.set(score.get() + 100);
+                BatPowerUp bpu = new BatPowerUp();
+                bpu.pickedUp(PowerUp.PowerUpType.BIGGER);
             }
         });
 
@@ -170,18 +179,16 @@ public class Breakout extends GameApplication{
             @Override
             public void onCollisionBegin(Entity a, Entity b) {
                 //Was passiert wenn der Ball den Boden berührt?
-                /**Diese Prozedur wird nur sporadisch ausgeführt. Das hängt damit zusammen,
-                 * dass die Wände keine gescheite HitBox haben, zumindest prahlt der Ball nicht ab.
-                 * Daher musste ich extra eine Bildschirmbegrenzung anfügen.
-                 **/
 
                 score.set(score.get() - 1000);
                 a.removeFromWorld();
                 initBall();
             }
+
             @Override
             public void onCollision(Entity a, Entity b) {
             }
+
             @Override
             public void onCollisionEnd(Entity a, Entity b) {
             }
@@ -201,7 +208,8 @@ public class Breakout extends GameApplication{
         getGameScene().addUINode(scoreText);
     }
 
-    private void initBackground() {}
+    private void initBackground() {
+    }
 
     private void initWalls() {
 
@@ -211,7 +219,7 @@ public class Breakout extends GameApplication{
 
         for (i = 0; i < 60; i++) {
 
-            Entity top =  wall.createWalls("top", getWidth(), getHeight(), i);
+            Entity top = wall.createWalls("top", getWidth(), getHeight(), i);
             getGameWorld().addEntities(top);
 
         }
@@ -233,31 +241,21 @@ public class Breakout extends GameApplication{
         getGameWorld().addEntities(bot);
     }
 
-
-    /*@Override
-    protected void initUI(Pane uiRoot) {
-        Text scoreText = new Text();
-        scoreText.setTranslateY(20);
-        scoreText.setTranslateX(5);
-        scoreText.setFont(Font.font(20));
-        scoreText.textProperty().bind(score.asString());
-
-        uiRoot.getChildren().add(scoreText);
-    }*/
-
     private void initBat() {
 
+        ApplicationWidth = getWidth();
+        ApplicationHeight = getHeight();
         BatFactory bf = new BatFactory();
-        Entity bat = bf.createBat(getWidth() / 2 - 135 / 2, getHeight() - 32);
+        Entity bat = bf.createBat(ApplicationWidth / 2 - 135 / 2, ApplicationHeight - 32, batTexture);
         getGameWorld().addEntities(bat);
 
-        batControl = bat.getControlUnsafe(BatControl.class );
+        batControl = bat.getControlUnsafe(BatControl.class);
     }
 
     private void initBall() {
 
         BallFactory bf = new BallFactory();
-        getGameWorld().addEntities(bf.createBall( getWidth()/2 - 35 / 2, getHeight()/2 - 35 / 2));
+        getGameWorld().addEntities(bf.createBall(getWidth() / 2 - 35 / 2, getHeight() / 2 - 35 / 2));
         //ballPhysics = bf.ballPhysics;
     }
 
@@ -268,7 +266,7 @@ public class Breakout extends GameApplication{
         playField = new ArrayList<GameEntity>();
         playField = pf.getPlayField();
 
-        for(int i = 0; i < 12; i++) {
+        for (int i = 0; i < 12; i++) {
 
             getGameWorld().addEntities(playField.get(i));
         }
@@ -283,12 +281,13 @@ public class Breakout extends GameApplication{
 
         getGameWorld().addEntity(walls);
     }
+
     @Override
     protected void onUpdate(double tpf) {
 
-
-        //ballPhysics = new PhysicsComponent();
-        /*batPhysics.setLinearVelocity(0,0);
+        /*batPhysics = new PhysicsComponent();
+        ballPhysics = new PhysicsComponent();
+        batPhysics.setLinearVelocity(0,0);
 
         //Geschwindigkeit des Balls regeln. Wenn Geschw. unter 5 -> auf 5 setzen
         Point2D v = ballPhysics.getLinearVelocity();
@@ -296,22 +295,13 @@ public class Breakout extends GameApplication{
             double x = v.getX();
             double signY = Math.signum(v.getY());
             ballPhysics.setLinearVelocity(x, signY * 5);
-        }*/
-        /*bat.setLinearVelocity(0,0);
+            }*/
 
-        //Geschwindigkeit des Balls regeln. Wenn Geschw. unter 5 -> auf 5 setzen
-        Point2D v = ball.getLinearVelocity();
-        if(Math.abs(v.getY())<5){
-            double x = v.getX();
-            double signY = Math.signum(v.getY());
-            ball.setLinearVelocity(x, signY * 5 );
-        }*/
-    }
-
-
+}
 
     public static void main(java.lang.String[] args) {
         launch(args);
     }
 
 }
+
