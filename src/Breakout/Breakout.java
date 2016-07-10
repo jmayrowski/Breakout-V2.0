@@ -171,11 +171,11 @@ public class Breakout extends GameApplication {
             public void onCollisionEnd(Entity a, Entity b) {
 
                 b.removeFromWorld();
-                BatPowerUp bpu = new BatPowerUp();
-                bpu.pickedUp(PowerUp.PowerUpType.BIGGER);
-                BallPowerUp ballPU = new BallPowerUp();
-                ballPU.pickedUp(PowerUp.PowerUpType.FASTER);
-                ballPU.pickedUp(PowerUp.PowerUpType.MULTIBALL);
+                //BatPowerUp bpu = new BatPowerUp();
+                //bpu.pickedUp(PowerUp.PowerUpType.BIGGER);
+                //BallPowerUp ballPU = new BallPowerUp();
+                //ballPU.pickedUp(PowerUp.PowerUpType.FASTER);
+                //ballPU.pickedUp(PowerUp.PowerUpType.MULTIBALL);
             }
         });
 
@@ -270,9 +270,11 @@ public class Breakout extends GameApplication {
         playField = new ArrayList<GameEntity>();
         playField = pf.getPlayField();
 
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < 65; i++) {
 
-            getGameWorld().addEntities(playField.get(i));
+            if (playField.size() > i) {
+                { getGameWorld().addEntities(playField.get(i));}
+            } else break;
         }
 
         playField.clear();

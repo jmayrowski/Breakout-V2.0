@@ -8,6 +8,7 @@ import com.almasb.fxgl.entity.component.BoundingBoxComponent;
 import com.almasb.fxgl.entity.component.MainViewComponent;
 import com.almasb.fxgl.entity.component.PositionComponent;
 import com.almasb.fxgl.physics.PhysicsComponent;
+import javafx.geometry.Point2D;
 
 /**
  * Created by Romano on 09.07.2016.
@@ -37,7 +38,11 @@ public class BatControl extends AbstractControl {
 
         if(batPhysics != null){
 
-            batPhysics.setLinearVelocity(-10, 0);
+            Point2D p = position.getValue();
+            if (p.getX() < 40) {
+                batPhysics.setLinearVelocity(0, 0);
+            }
+            else{batPhysics.setLinearVelocity(-10, 0);}
         }
 
 
@@ -47,7 +52,11 @@ public class BatControl extends AbstractControl {
 
         if(batPhysics != null) {
 
-            batPhysics.setLinearVelocity(10, 0);
+            Point2D p = position.getValue();
+            if (p.getX() > (Breakout.ApplicationWidth - 175)) {
+                batPhysics.setLinearVelocity(0, 0);
+            }
+            else {batPhysics.setLinearVelocity(10, 0);}
 
         }
     }

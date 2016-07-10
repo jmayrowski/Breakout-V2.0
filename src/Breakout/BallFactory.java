@@ -53,7 +53,7 @@ public class BallFactory {
         fd.setShape(new CircleShape());
         fd.getShape().setRadius((float) 13.5);
         ballPhysics.setFixtureDef(fd);
-        ballPhysics.setOnPhysicsInitialized(() -> ballPhysics.setLinearVelocity(0,10));
+        ballPhysics.setOnPhysicsInitialized(() -> ballPhysics.setLinearVelocity(0,2));
 
         ball.addComponent(ballPhysics);
         ball.addComponent(new CollidableComponent(true));
