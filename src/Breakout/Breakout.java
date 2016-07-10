@@ -149,7 +149,7 @@ public class Breakout extends GameApplication {
         //Kollisionsabfrage zw. Ball und Brick
         PhysicsWorld physics = getPhysicsWorld();
 
-        physics.setGravity(0, 1);
+        //physics.setGravity(0, 0.01f);
         physics.addCollisionHandler(new CollisionHandler(Type.BALL, Type.BRICK) {
             @Override
             public void onCollisionBegin(Entity a, Entity b) {
@@ -173,6 +173,9 @@ public class Breakout extends GameApplication {
                 b.removeFromWorld();
                 BatPowerUp bpu = new BatPowerUp();
                 bpu.pickedUp(PowerUp.PowerUpType.BIGGER);
+                BallPowerUp ballPU = new BallPowerUp();
+                ballPU.pickedUp(PowerUp.PowerUpType.FASTER);
+                ballPU.pickedUp(PowerUp.PowerUpType.MULTIBALL);
             }
         });
 
@@ -267,7 +270,7 @@ public class Breakout extends GameApplication {
         playField = new ArrayList<GameEntity>();
         playField = pf.getPlayField();
 
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 25; i++) {
 
             getGameWorld().addEntities(playField.get(i));
         }

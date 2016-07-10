@@ -12,7 +12,7 @@ import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 
-import static com.almasb.fxgl.physics.BoundingShape.box;
+import static com.almasb.fxgl.physics.BoundingShape.circle;
 
 /**
  * Created by Romano on 09.07.2016.
@@ -34,35 +34,32 @@ public class BallFactory {
     public Entity createBall(double x, double y){
 
 
-        BoundingShape Ball = box(27,27);
+        BoundingShape Ball = circle(13.5);
 
 
         ball = Entities.builder()
                 .type(Breakout.Type.BALL)
                 .at(x,y)
                 .bbox(new HitBox("BallHitBox", Ball))
-                .viewFromTextureWithBBox("Balls/ball_red.png")
+                .viewFromTexture("Balls/ball_red.png")
                 .build();
-
-        //ball.addComponent(new TypeComponent());
-
-        ball.addComponent(new CollidableComponent(true));
 
         ballPhysics = new PhysicsComponent();
         ballPhysics.setBodyType(BodyType.DYNAMIC);
 
-
         FixtureDef fd = new FixtureDef();
-        fd.setRestitution(0.8f);
+        fd.setDensity(0.3f);
+        fd.setRestitution(1.1f);
         fd.setShape(new CircleShape());
         fd.getShape().setRadius((float) 13.5);
         ballPhysics.setFixtureDef(fd);
-
-
+        ballPhysics.setOnPhysicsInitialized(() -> ballPhysics.setLinearVelocity(0,10));
 
         ball.addComponent(ballPhysics);
+        ball.addComponent(new CollidableComponent(true));
 
         ball.addControl(new BallControl());
+
         return ball;
     }
 

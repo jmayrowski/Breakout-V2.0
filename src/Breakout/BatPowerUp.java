@@ -15,10 +15,6 @@ public class BatPowerUp implements PowerUp{
 
         switch (effect){
 
-            case FASTER:
-                break;
-            case SLOWER:
-                break;
             case BIGGER:
                 bc.increaseBatWidth();
                 break;

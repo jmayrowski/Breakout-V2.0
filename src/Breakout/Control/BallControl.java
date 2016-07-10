@@ -10,7 +10,7 @@ import javafx.geometry.Point2D;
  */
 public class BallControl extends AbstractControl {
 
-    private PhysicsComponent ball;
+    public static PhysicsComponent ball;
 
     @Override
     public void onAdded(Entity entity) {
@@ -20,17 +20,54 @@ public class BallControl extends AbstractControl {
 
     @Override
     public void onUpdate(Entity entity, double tpf) {
+
         Point2D v = ball.getLinearVelocity();
         if (Math.abs(v.getY()) < 5) {
             double x = v.getX();
             double signY = Math.signum(v.getY());
             ball.setLinearVelocity(x, signY * 5);
-        } else {
+        }
+        if (Math.abs(v.getX()) < 5){
 
-            if (Math.abs(ball.getLinearVelocity().getX()) < 5) {
-                ball.setLinearVelocity(Math.signum(ball.getLinearVelocity().getX()) * 5,
-                        ball.getLinearVelocity().getY());
+            ball.setLinearVelocity(Math.signum(v.getX()) * 5,
+                        v.getY());
+
+        }
+        if (Math.abs(v.getX()) >= 20 || Math.abs(v.getY()) >= 20 ){
+
+            ball.setLinearVelocity(Math.signum(v.getX()) * 15, Math.signum(v.getY() * 15));
+
+        }
+    }
+
+    public void speedUpBall(){
+
+        if(ball != null){
+            Point2D v = ball.getLinearVelocity();
+            if (Math.abs(v.getY()) <= 15 && Math.abs(v.getX()) <= 15){
+                ball.setLinearVelocity(Math.signum(v.getX()) * 15,
+                        Math.signum(v.getY()) * 15);
             }
         }
+
+    }
+
+    public void slowDownBall(){
+
+        if(ball != null){
+            Point2D v = ball.getLinearVelocity();
+            if (Math.abs(v.getY()) >= 5 && Math.abs(v.getX()) >= 5){
+                ball.setLinearVelocity(Math.signum(ball.getLinearVelocity().getX()) * 2,
+                        Math.signum(ball.getLinearVelocity().getY()) * 2);
+            }
+
+        }
+    }
+
+    public void multiBall(){
+
+
+
+
     }
 }
