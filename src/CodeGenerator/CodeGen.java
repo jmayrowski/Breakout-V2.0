@@ -22,7 +22,7 @@ public class CodeGen extends LevelBaseListener {
     public static int counter = 0;
     public String Tupelwert;
     public static int numberBricks;
-    static File file = new File("D:\\Programmierprojekte\\Breakout V2.0\\src\\CodeGenerator\\out\\PlayField.java"); // Pfad
+    static File file = new File("out\\PlayField.java"); // Pfad
 
 
 
@@ -30,11 +30,17 @@ public class CodeGen extends LevelBaseListener {
 
 
 
+        String pfad = file.getAbsolutePath();
 
-        System.out.println("'PlayFieldCreator.java' successfully generated");
+        System.out.println(file.toString() + " successfully generated");
+
+        System.out.println(pfad);
+
+        File inputFile = new File("csv\\level_one.csv");
+        System.out.println(inputFile.getAbsolutePath());
 
 
-        LevelLexer lexer = new LevelLexer(new ANTLRInputStream(new FileReader("D:\\Programmierprojekte\\Breakout V2.0\\src\\CodeGenerator\\csv\\level_one.csv")));
+        LevelLexer lexer = new LevelLexer(new ANTLRInputStream(new FileReader(inputFile)));
 
         CommonTokenStream tokens = new CommonTokenStream(lexer);
 
