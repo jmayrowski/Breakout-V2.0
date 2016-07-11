@@ -1,4 +1,4 @@
-package Breakout.Control;
+package Breakout.control;
 
 import Breakout.BatFactory;
 import Breakout.Breakout;
@@ -81,7 +81,7 @@ public class BatControl extends AbstractControl {
 
                 Breakout.gameWorld.removeEntities(Breakout.bat, bat);
 
-                bat = bf.createBat( position.getX() - (135 / 3), Breakout.ApplicationHeight - 32, "Bats/bat_black_big.png");
+                bat = bf.createBat( position.getX() - (135 / 3), Breakout.ApplicationHeight - 32, "bats/bat_black_big.png");
                 Breakout.gameWorld.addEntities(bat);
                 Breakout.batControl = bat.getControlUnsafe(BatControl.class);
 
@@ -95,7 +95,7 @@ public class BatControl extends AbstractControl {
 
                 Breakout.gameWorld.removeEntities(Breakout.bat, bat );
 
-                bat = bf.createBat( position.getX() - (300 / 3), Breakout.ApplicationHeight - 32, "Bats/bat_black_bigger.png");
+                bat = bf.createBat( position.getX() - (300 / 3), Breakout.ApplicationHeight - 32, "bats/bat_black_bigger.png");
                 Breakout.gameWorld.addEntities(bat);
                 Breakout.batControl = bat.getControlUnsafe(BatControl.class);
 
@@ -108,7 +108,7 @@ public class BatControl extends AbstractControl {
 
                 Breakout.gameWorld.removeEntities(Breakout.bat, bat);
 
-                bat = bf.createBat( position.getX() - 500 / 5  , Breakout.ApplicationHeight - 32, "Bats/bat_black_biggest.png");
+                bat = bf.createBat( position.getX() - 500 / 5  , Breakout.ApplicationHeight - 32, "bats/bat_black_biggest.png");
                 Breakout.gameWorld.addEntities(bat);
                 Breakout.batControl = bat.getControlUnsafe(BatControl.class);
 
@@ -131,7 +131,7 @@ public class BatControl extends AbstractControl {
 
                 Breakout.gameWorld.removeEntities(Breakout.bat);
 
-                Entity bat = bf.createBat( position.getX() + batWidth / 2  , Breakout.ApplicationHeight - 32, "Bats/bat_black_mini.png");
+                Entity bat = bf.createBat( position.getX() + batWidth / 2  , Breakout.ApplicationHeight - 32, "bats/bat_black_mini.png");
                 Breakout.gameWorld.addEntities(bat);
                 Breakout.batControl = bat.getControlUnsafe(BatControl.class);
 

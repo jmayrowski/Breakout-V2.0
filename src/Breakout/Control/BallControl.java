@@ -1,7 +1,10 @@
-package Breakout.Control;
+package Breakout.control;
 
+import Breakout.BallFactory;
+import Breakout.Breakout;
 import com.almasb.ents.AbstractControl;
 import com.almasb.ents.Entity;
+import com.almasb.fxgl.entity.component.PositionComponent;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import javafx.geometry.Point2D;
 
@@ -10,12 +13,14 @@ import javafx.geometry.Point2D;
  */
 public class BallControl extends AbstractControl {
 
+    public static PositionComponent position;
     public static PhysicsComponent ball;
 
     @Override
     public void onAdded(Entity entity) {
 
         ball = entity.getComponentUnsafe(PhysicsComponent.class);
+        position = entity.getComponentUnsafe(PositionComponent.class);
     }
 
     @Override
@@ -66,7 +71,13 @@ public class BallControl extends AbstractControl {
 
     public void multiBall(){
 
+        if(ball != null){
 
+            Point2D p = position.getValue();
+            BallFactory bf = new BallFactory();
+            Breakout.gameWorld.addEntities(bf.createMultiball(p, 1, "blue"));
+
+        }
 
 
     }

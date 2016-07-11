@@ -1,6 +1,6 @@
 package Breakout;
 
-import Breakout.Control.BallControl;
+import Breakout.control.BallControl;
 
 /**
  * Created by Romano on 10.07.2016.

@@ -1,6 +1,6 @@
 package Breakout;
 
-import Breakout.Control.BatControl;
+import Breakout.control.BatControl;
 
 /**
  * Created by Romano on 10.07.2016.

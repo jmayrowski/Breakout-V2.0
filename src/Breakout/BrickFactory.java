@@ -4,12 +4,9 @@ import com.almasb.fxgl.entity.Entities;
 import com.almasb.fxgl.entity.GameEntity;
 import com.almasb.fxgl.entity.component.CollidableComponent;
 import com.almasb.fxgl.physics.BoundingShape;
-import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import javafx.geometry.Point2D;
 import org.jbox2d.dynamics.BodyType;
-
-import java.lang.String;
 
 /**
  * Created by Romano on 09.07.2016.
@@ -33,25 +30,25 @@ public class BrickFactory {
     public String chooseTextureColor(int colorKey){
 
         switch (colorKey) {
-            case 0:  textureName = "Bricks/brick_blue_small.png";
+            case 0:  textureName = "bricks/brick_blue_small.png";
                 break;
-            case 1:  textureName = "Bricks/brick_blue_small_cracked.png";
+            case 1:  textureName = "bricks/brick_blue_small_cracked.png";
                 break;
-            case 2:  textureName = "Bricks/brick_green_small.png";
+            case 2:  textureName = "bricks/brick_green_small.png";
                 break;
-            case 3:  textureName = "Bricks/brick_green_small_cracked.png";
+            case 3:  textureName = "bricks/brick_green_small_cracked.png";
                 break;
-            case 4:  textureName = "Bricks/brick_pink_small.png";
+            case 4:  textureName = "bricks/brick_pink_small.png";
                 break;
-            case 5:  textureName = "Bricks/brick_pink_small_cracked.png";
+            case 5:  textureName = "bricks/brick_pink_small_cracked.png";
                 break;
-            case 6:  textureName = "Bricks/brick_violet_small.png";
+            case 6:  textureName = "bricks/brick_violet_small.png";
                 break;
-            case 7:  textureName = "Bricks/brick_violet_small_cracked.png";
+            case 7:  textureName = "bricks/brick_violet_small_cracked.png";
                 break;
-            case 8:  textureName = "Bricks/brick_yellow_small.png";
+            case 8:  textureName = "bricks/brick_yellow_small.png";
                 break;
-            case 9:  textureName = "Bricks/brick_yellow_small_cracked.png";
+            case 9:  textureName = "bricks/brick_yellow_small_cracked.png";
 
                 break;
         }
@@ -68,7 +65,7 @@ public class BrickFactory {
         brick = Entities.builder()
                 .type(Breakout.Type.BRICK)
                 .at(p.getX(),p.getY())
-                .bbox(new HitBox("BrickHitBox", Box))
+                //.bbox(new HitBox("BrickHitBox", Box))
                 .viewFromTextureWithBBox(chooseTextureColor(colorKey))
                 .build();
 

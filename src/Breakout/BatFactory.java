@@ -1,6 +1,6 @@
 package Breakout;
 
-import Breakout.Control.BatControl;
+import Breakout.control.BatControl;
 import com.almasb.ents.Entity;
 import com.almasb.fxgl.entity.Entities;
 import com.almasb.fxgl.entity.GameEntity;

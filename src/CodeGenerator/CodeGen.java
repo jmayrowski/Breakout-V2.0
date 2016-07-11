@@ -57,7 +57,7 @@ public class CodeGen extends LevelBaseListener {
         file.createNewFile();
 
         for (int i = 0; i < numberBricks; i++){
-            writer.write("Anzahl der Bricks " + counter);
+            writer.write("Anzahl der bricks " + counter);
         }
 
 

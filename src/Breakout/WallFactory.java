@@ -34,7 +34,7 @@ public class WallFactory {
                     .type(Breakout.Type.WALL)
                     .at((i % 50) * 28 - 8, -8)
                     .bbox(new HitBox("WallHitBox", Box))
-                    .viewFromTextureWithBBox("Walls/brick_red.png")
+                    .viewFromTextureWithBBox("walls/brick_red.png")
                     .build();
 
             top.addComponent(new CollidableComponent(true));
@@ -55,7 +55,7 @@ public class WallFactory {
                         .type(Breakout.Type.WALL)
                         .at(-8, (i % 50) * 28 - 8)
                         .bbox(new HitBox("WallHitBox", Box))
-                        .viewFromTextureWithBBox("Walls/brick_red.png")
+                        .viewFromTextureWithBBox("walls/brick_red.png")
                         .build();
 
             wallPhysics = new PhysicsComponent();
@@ -75,7 +75,7 @@ public class WallFactory {
                         .type(Breakout.Type.WALL)
                         .at(width - 28, (i % 50) * 28 - 8)
                         .bbox(new HitBox("WallHitBox", Box))
-                        .viewFromTextureWithBBox("Walls/brick_red.png")
+                        .viewFromTextureWithBBox("walls/brick_red.png")
                         .build();
 
             wallPhysics = new PhysicsComponent();
