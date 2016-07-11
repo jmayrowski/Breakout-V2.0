@@ -26,7 +26,7 @@ public class BallControl extends AbstractControl {
     @Override
     public void onUpdate(Entity entity, double tpf) {
 
-        /*Point2D v = ball.getLinearVelocity();
+        Point2D v = ball.getLinearVelocity();
         if (Math.abs(v.getY()) < 2) {
             double x = v.getX();
             double signY = Math.signum(v.getY());
@@ -42,7 +42,7 @@ public class BallControl extends AbstractControl {
 
             ball.setLinearVelocity(Math.signum(v.getX()) * 20, Math.signum(v.getY() * 20));
 
-        }*/
+        }
     }
 
     public void speedUpBall(){
