@@ -16,6 +16,7 @@ public class BrickFactory {
     private BrickFactory brickFactory;
     private String textureName;
     private GameEntity brick;
+    private Breakout.Type brickType;
     private static PhysicsComponent brickPhysics;
 
 
@@ -56,6 +57,32 @@ public class BrickFactory {
         return textureName;
     }
 
+    public Breakout.Type getBrickType(int brickTypeNumber){
+        //Bricktype wählen auf Basis der PlayField Eigenschaften für jeden Brick
+        switch (brickTypeNumber){
+
+            case 0:
+                brickType = Breakout.Type.BRICK;
+                break;
+            case 1:
+                brickType = Breakout.Type.BRICK_FASTER_POWERUP;
+                break;
+            case 2:
+                brickType = Breakout.Type.BRICK_SLOWER_POWERUP;
+                break;
+            case 3:
+                brickType = Breakout.Type.BRICK_MULTIBALL_POWERUP;
+                break;
+            case 4:
+                brickType = Breakout.Type.BRICK_BIGGER_POWERUP;
+                break;
+            case 5:
+                brickType = Breakout.Type.BRICK_SMALLER_POWERUP;
+            default:
+                brickType = Breakout.Type.BRICK;
+        }
+        return brickType;
+    }
     public GameEntity initBrick(int position, int colorKey){
 
         BoundingShape Box = BoundingShape.box(90,40);
@@ -64,6 +91,27 @@ public class BrickFactory {
 
         brick = Entities.builder()
                 .type(Breakout.Type.BRICK)
+                .at(p.getX(),p.getY())
+                //.bbox(new HitBox("BrickHitBox", Box))
+                .viewFromTextureWithBBox(chooseTextureColor(colorKey))
+                .build();
+
+        brickPhysics = new PhysicsComponent();
+        brickPhysics.setBodyType(BodyType.STATIC);
+
+        brick.addComponent(brickPhysics);
+        brick.addComponent(new CollidableComponent(true));
+
+        return brick;
+    }
+    public GameEntity initBrick(int position, int colorKey, int brickTypeNumber){
+
+        BoundingShape Box = BoundingShape.box(90,40);
+
+        Point2D p = new Point2D((position % 11) * 100 + 95, (position / 11 ) * 45 + 30);
+
+        brick = Entities.builder()
+                .type(getBrickType(brickTypeNumber))
                 .at(p.getX(),p.getY())
                 //.bbox(new HitBox("BrickHitBox", Box))
                 .viewFromTextureWithBBox(chooseTextureColor(colorKey))

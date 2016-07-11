@@ -8,10 +8,8 @@ import Breakout.control.BreakoutUIController;
 import com.almasb.ents.Entity;
 import com.almasb.fxgl.app.ApplicationMode;
 import com.almasb.fxgl.app.GameApplication;
-import com.almasb.fxgl.entity.Entities;
 import com.almasb.fxgl.entity.GameEntity;
-import com.almasb.fxgl.entity.component.CollidableComponent;
-import com.almasb.fxgl.entity.component.TypeComponent;
+import com.almasb.fxgl.entity.component.PositionComponent;
 import com.almasb.fxgl.gameplay.GameWorld;
 import com.almasb.fxgl.input.ActionType;
 import com.almasb.fxgl.input.Input;
@@ -23,6 +21,7 @@ import com.almasb.fxgl.scene.menu.MenuStyle;
 import com.almasb.fxgl.settings.GameSettings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
@@ -45,13 +44,18 @@ public class Breakout extends GameApplication {
     public static double ApplicationHeight;
     public static GameWorld gameWorld;
     public static Entity bat;
+    public PositionComponent position;
+    public GameEntity powerUp;
 
     private ArrayList<GameEntity> playField;
 
     private IntegerProperty score;
 
     public enum Type {
-        BAT, BALL, MULTIBALL, BRICK, WALL, GROUND
+        BAT, WALL, GROUND, BALL, MULTIBALL,
+        BRICK, BRICK_FASTER_POWERUP, BRICK_SLOWER_POWERUP,
+        BRICK_BIGGER_POWERUP, BRICK_SMALLER_POWERUP, BRICK_MULTIBALL_POWERUP
+
     }
 
     @Override
@@ -142,101 +146,6 @@ public class Breakout extends GameApplication {
     }
 
     @Override
-    protected void initPhysics() {
-        //Kollisionsabfrage zw. Ball und Brick
-        PhysicsWorld physics = getPhysicsWorld();
-
-        //physics.setGravity(0, 0.01f);
-        physics.addCollisionHandler(new CollisionHandler(Type.BALL, Type.BRICK) {
-            @Override
-            public void onCollisionBegin(Entity a, Entity b) {
-
-                score.set(score.get() + 100);
-
-            }
-
-            @Override
-            public void onCollision(Entity a, Entity b) {
-
-
-            }
-
-            @Override
-            public void onCollisionEnd(Entity a, Entity b) {
-
-                b.removeFromWorld();
-                //BatPowerUp bpu = new BatPowerUp();
-                //bpu.pickedUp(PowerUp.PowerUpType.BIGGER);
-                BallPowerUp ballPU = new BallPowerUp();
-                //ballPU.pickedUp(PowerUp.PowerUpType.MULTIBALL);
-                //ballPU.pickedUp(PowerUp.PowerUpType.FASTER);
-                //ballPU.pickedUp(PowerUp.PowerUpType.MULTIBALL);
-            }
-        });
-
-        physics.addCollisionHandler(new CollisionHandler(Type.MULTIBALL, Type.BRICK) {
-            @Override
-            public void onCollisionBegin(Entity a, Entity b) {
-
-                score.set(score.get() + 100);
-
-            }
-
-            @Override
-            public void onCollision(Entity a, Entity b) {
-
-
-            }
-
-            @Override
-            public void onCollisionEnd(Entity a, Entity b) {
-
-                b.removeFromWorld();
-
-            }
-        });
-
-        physics.addCollisionHandler(new CollisionHandler(Type.BALL, Type.GROUND) {
-            @Override
-            public void onCollisionBegin(Entity a, Entity b) {
-                //Was passiert wenn der Ball den Boden berührt?
-
-                score.set(score.get() - 1000);
-                BallFactory bf = new BallFactory();
-                bf.setBall(null);
-                a.removeFromWorld();
-
-            }
-
-            @Override
-            public void onCollision(Entity a, Entity b) {
-            }
-
-            @Override
-            public void onCollisionEnd(Entity a, Entity b) {
-
-            }
-        });
-
-        physics.addCollisionHandler(new CollisionHandler(Type.MULTIBALL, Type.GROUND) {
-            @Override
-            public void onCollisionBegin(Entity a, Entity b) {
-                //Was passiert wenn der Ball den Boden berührt?
-
-                a.removeFromWorld();
-            }
-
-            @Override
-            public void onCollision(Entity a, Entity b) {
-            }
-
-            @Override
-            public void onCollisionEnd(Entity a, Entity b) {
-            }
-        });
-    }
-
-    @Override
     protected void initUI() {
 
         BreakoutUIController controller = new BreakoutUIController();
@@ -251,12 +160,14 @@ public class Breakout extends GameApplication {
     }
 
     private void initBackground() {
+
     }
 
     private void initWalls() {
 
 
         WallFactory wall = new WallFactory();
+
         int i;
 
         for (i = 0; i < 60; i++) {
@@ -265,7 +176,6 @@ public class Breakout extends GameApplication {
             getGameWorld().addEntities(top);
 
         }
-
 
         for (i = 0; i < 60; i++) {
 
@@ -322,30 +232,362 @@ public class Breakout extends GameApplication {
         playField.clear();
     }
 
-    private void initScreenBounds() {
-        Entity walls = Entities.makeScreenBounds(150);
-        walls.addComponent(new TypeComponent(Type.WALL));
-        walls.addComponent(new CollidableComponent(true));
-
-        getGameWorld().addEntity(walls);
-    }
-
     @Override
     protected void onUpdate(double tpf) {
 
-        /*batPhysics = new PhysicsComponent();
-        ballPhysics = new PhysicsComponent();
-        batPhysics.setLinearVelocity(0,0);
-
-        //Geschwindigkeit des balls regeln. Wenn Geschw. unter 5 -> auf 5 setzen
-        Point2D v = ballPhysics.getLinearVelocity();
-        if(Math.abs(v.getY())<5) {
-            double x = v.getX();
-            double signY = Math.signum(v.getY());
-            ballPhysics.setLinearVelocity(x, signY * 5);
-            }*/
-
 }
+    @Override
+    protected void initPhysics() {
+
+
+        //Kollisionsabfrage zw. Ball und Brick
+        PhysicsWorld physics = getPhysicsWorld();
+
+        physics.addCollisionHandler(new CollisionHandler(Type.BALL, Type.BRICK) {
+            @Override
+            public void onCollisionBegin(Entity a, Entity b) {
+
+                score.set(score.get() + 100);
+
+            }
+
+            @Override
+            public void onCollisionEnd(Entity a, Entity b) {
+
+                b.removeFromWorld();
+            }
+        });
+
+        physics.addCollisionHandler(new CollisionHandler(Type.BALL, Type.BRICK_FASTER_POWERUP) {
+            @Override
+            public void onCollisionBegin(Entity a, Entity b) {
+
+                score.set(score.get() + 100);
+
+            }
+
+            @Override
+            public void onCollisionEnd(Entity a, Entity b) {
+
+                position = b.getComponentUnsafe(PositionComponent.class);
+                Point2D p = position.getValue();
+                b.removeFromWorld();
+
+                PowerUpSpawner PUSpawner = new PowerUpSpawner();
+                powerUp = PUSpawner.spawnPowerUp(p, PowerUp.PowerUpType.FASTER, "yellow");
+                getGameWorld().addEntity(powerUp);
+
+            }
+        });
+
+        physics.addCollisionHandler(new CollisionHandler(Type.BALL, Type.BRICK_SLOWER_POWERUP) {
+            @Override
+            public void onCollisionBegin(Entity a, Entity b) {
+
+                score.set(score.get() + 100);
+
+            }
+
+            @Override
+            public void onCollisionEnd(Entity a, Entity b) {
+
+                position = b.getComponentUnsafe(PositionComponent.class);
+                Point2D p = position.getValue();
+                b.removeFromWorld();
+
+                PowerUpSpawner PUSpawner = new PowerUpSpawner();
+                powerUp = PUSpawner.spawnPowerUp(p, PowerUp.PowerUpType.SLOWER, "purple");
+                getGameWorld().addEntity(powerUp);
+
+            }
+        });
+
+        physics.addCollisionHandler(new CollisionHandler(Type.BALL, Type.BRICK_MULTIBALL_POWERUP) {
+            @Override
+            public void onCollisionBegin(Entity a, Entity b) {
+
+                score.set(score.get() + 100);
+
+            }
+
+            @Override
+            public void onCollisionEnd(Entity a, Entity b) {
+
+                position = b.getComponentUnsafe(PositionComponent.class);
+                Point2D p = position.getValue();
+                b.removeFromWorld();
+
+                PowerUpSpawner PUSpawner = new PowerUpSpawner();
+                powerUp = PUSpawner.spawnPowerUp(p, PowerUp.PowerUpType.MULTIBALL, "green");
+                getGameWorld().addEntity(powerUp);
+
+            }
+        });
+
+        physics.addCollisionHandler(new CollisionHandler(Type.BALL, Type.BRICK_BIGGER_POWERUP) {
+            @Override
+            public void onCollisionBegin(Entity a, Entity b) {
+
+                score.set(score.get() + 100);
+
+            }
+
+            @Override
+            public void onCollisionEnd(Entity a, Entity b) {
+
+                position = b.getComponentUnsafe(PositionComponent.class);
+                Point2D p = position.getValue();
+                b.removeFromWorld();
+
+                PowerUpSpawner PUSpawner = new PowerUpSpawner();
+                powerUp = PUSpawner.spawnPowerUp(p, PowerUp.PowerUpType.BIGGER, "blue");
+                getGameWorld().addEntity(powerUp);
+
+            }
+        });
+
+        physics.addCollisionHandler(new CollisionHandler(Type.BALL, Type.BRICK_SMALLER_POWERUP) {
+            @Override
+            public void onCollisionBegin(Entity a, Entity b) {
+
+                score.set(score.get() + 100);
+
+            }
+
+            @Override
+            public void onCollisionEnd(Entity a, Entity b) {
+
+                position = b.getComponentUnsafe(PositionComponent.class);
+                Point2D p = position.getValue();
+                b.removeFromWorld();
+
+                PowerUpSpawner PUSpawner = new PowerUpSpawner();
+                powerUp = PUSpawner.spawnPowerUp(p, PowerUp.PowerUpType.SMALLER, "red");
+                getGameWorld().addEntity(powerUp);
+
+            }
+        });
+        //Kollisionsabfrage zwischen den Zusatzbällen und den Bricks
+        physics.addCollisionHandler(new CollisionHandler(Type.MULTIBALL, Type.BRICK) {
+            @Override
+            public void onCollisionBegin(Entity a, Entity b) {
+
+                //Block wird zerstört und es gibt Punkte, aber es werden keine PowerUps erzeugt
+                score.set(score.get() + 100);
+                b.removeFromWorld();
+
+            }
+        });
+
+        physics.addCollisionHandler(new CollisionHandler(Type.MULTIBALL, Type.BRICK_FASTER_POWERUP) {
+            @Override
+            public void onCollisionBegin(Entity a, Entity b) {
+
+                //Block wird zerstört und es gibt Punkte, aber es werden keine PowerUps erzeugt
+                score.set(score.get() + 100);
+                b.removeFromWorld();
+
+            }
+        });
+
+        physics.addCollisionHandler(new CollisionHandler(Type.MULTIBALL, Type.BRICK_SLOWER_POWERUP) {
+            @Override
+            public void onCollisionBegin(Entity a, Entity b) {
+
+                //Block wird zerstört und es gibt Punkte, aber es werden keine PowerUps erzeugt
+                score.set(score.get() + 100);
+                b.removeFromWorld();
+
+            }
+        });
+
+        physics.addCollisionHandler(new CollisionHandler(Type.MULTIBALL, Type.BRICK_MULTIBALL_POWERUP) {
+            @Override
+            public void onCollisionBegin(Entity a, Entity b) {
+
+                //Block wird zerstört und es gibt Punkte, aber es werden keine PowerUps erzeugt
+                score.set(score.get() + 100);
+                b.removeFromWorld();
+
+            }
+        });
+
+        physics.addCollisionHandler(new CollisionHandler(Type.MULTIBALL, Type.BRICK_BIGGER_POWERUP) {
+            @Override
+            public void onCollisionBegin(Entity a, Entity b) {
+
+                //Block wird zerstört und es gibt Punkte, aber es werden keine PowerUps erzeugt
+                score.set(score.get() + 100);
+                b.removeFromWorld();
+
+            }
+        });
+
+        physics.addCollisionHandler(new CollisionHandler(Type.MULTIBALL, Type.BRICK_SMALLER_POWERUP) {
+            @Override
+            public void onCollisionBegin(Entity a, Entity b) {
+
+                //Block wird zerstört und es gibt Punkte, aber es werden keine PowerUps erzeugt
+                score.set(score.get() + 100);
+                b.removeFromWorld();
+
+            }
+        });
+
+        //Kollisionsabfrage zwischen Ball und Boden
+        physics.addCollisionHandler(new CollisionHandler(Type.BALL, Type.GROUND) {
+            @Override
+            public void onCollisionBegin(Entity a, Entity b) {
+                //Was passiert wenn der Ball den Boden berührt?
+                //Er verschwindet, der Spieler verliert Punkte bzw. Leben
+
+                score.set(score.get() - 1000);
+                BallFactory bf = new BallFactory();
+                bf.setBall(null);
+                a.removeFromWorld();
+
+
+            }
+        });
+
+        //Kollisionsabfrage zwischen den Zusatzbällen und Boden
+        physics.addCollisionHandler(new CollisionHandler(Type.MULTIBALL, Type.GROUND) {
+            @Override
+            public void onCollisionBegin(Entity a, Entity b) {
+                //Was passiert wenn der ZusatzBall den Boden berührt?
+                //Er wird aus dem Spiel entfernt, es gibt dabei kein Punktabzug
+
+                a.removeFromWorld();
+            }
+        });
+
+        //Kollisionsabfragen zwischen PowerUp und Spielerpaddel
+        physics.addCollisionHandler(new CollisionHandler(PowerUp.PowerUpType.FASTER, Type.BAT) {
+            @Override
+            public void onCollisionBegin(Entity a, Entity b) {
+                //Was passiert wenn das PowerUp vom Spieler aufgefangen wird?
+                //Es wird der BallPowerUp Klasse mitgeteilt, dass ein PowerUp aufgesammelt wurde
+                //Anschließend, wird das PowerUp wieder aus der Spielwelt entfernt
+
+                BallPowerUp bpu = new BallPowerUp();
+                bpu.pickedUp(PowerUp.PowerUpType.FASTER);
+                a.removeFromWorld();
+
+            }
+        });
+
+        physics.addCollisionHandler(new CollisionHandler(PowerUp.PowerUpType.SLOWER, Type.BAT) {
+            @Override
+            public void onCollisionBegin(Entity a, Entity b) {
+                //Was passiert wenn das PowerUp vom Spieler aufgefangen wird?
+                //Es wird der BallPowerUp Klasse mitgeteilt, dass ein PowerUp aufgesammelt wurde
+                //Anschließend, wird das PowerUp wieder aus der Spielwelt entfernt
+
+                BallPowerUp bpu = new BallPowerUp();
+                bpu.pickedUp(PowerUp.PowerUpType.SLOWER);
+                a.removeFromWorld();
+
+            }
+        });
+
+        physics.addCollisionHandler(new CollisionHandler(PowerUp.PowerUpType.MULTIBALL, Type.BAT) {
+            @Override
+            public void onCollisionBegin(Entity a, Entity b) {
+                //Was passiert wenn das PowerUp vom Spieler aufgefangen wird?
+                //Es wird der BallPowerUp Klasse mitgeteilt, dass ein PowerUp aufgesammelt wurde
+                //Anschließend, wird das PowerUp wieder aus der Spielwelt entfernt
+
+                BallPowerUp bpu = new BallPowerUp();
+                bpu.pickedUp(PowerUp.PowerUpType.MULTIBALL);
+                a.removeFromWorld();
+
+            }
+        });
+
+        physics.addCollisionHandler(new CollisionHandler(PowerUp.PowerUpType.BIGGER, Type.BAT) {
+            @Override
+            public void onCollisionBegin(Entity a, Entity b) {
+                //Was passiert wenn das PowerUp vom Spieler aufgefangen wird?
+                //Es wird der BallPowerUp Klasse mitgeteilt, dass ein PowerUp aufgesammelt wurde
+                //Anschließend, wird das PowerUp wieder aus der Spielwelt entfernt
+
+                BatPowerUp bpu = new BatPowerUp();
+                bpu.pickedUp(PowerUp.PowerUpType.BIGGER);
+                a.removeFromWorld();
+
+            }
+        });
+
+        physics.addCollisionHandler(new CollisionHandler(PowerUp.PowerUpType.SMALLER, Type.BAT) {
+            @Override
+            public void onCollisionBegin(Entity a, Entity b) {
+                //Was passiert wenn das PowerUp vom Spieler aufgefangen wird?
+                //Es wird der BallPowerUp Klasse mitgeteilt, dass ein PowerUp aufgesammelt wurde
+                //Anschließend, wird das PowerUp wieder aus der Spielwelt entfernt
+
+                BatPowerUp bpu = new BatPowerUp();
+                bpu.pickedUp(PowerUp.PowerUpType.SMALLER);
+                a.removeFromWorld();
+
+            }
+        });
+
+        //Kollisionsabfrage zwischen PowerUp und Boden
+        physics.addCollisionHandler(new CollisionHandler(PowerUp.PowerUpType.FASTER, Type.GROUND) {
+            @Override
+            public void onCollisionBegin(Entity a, Entity b) {
+                //Was passiert wenn das PowerUp den Boden berührt?
+                //Es wird aus dem Spiel entfernt
+
+                a.removeFromWorld();
+            }
+        });
+        //Kollisionsabfrage zwischen PowerUp und Boden
+        physics.addCollisionHandler(new CollisionHandler(PowerUp.PowerUpType.SLOWER, Type.GROUND) {
+            @Override
+            public void onCollisionBegin(Entity a, Entity b) {
+                //Was passiert wenn das PowerUp den Boden berührt?
+                //Es wird aus dem Spiel entfernt
+
+                a.removeFromWorld();
+            }
+        });
+
+        //Kollisionsabfrage zwischen PowerUp und Boden
+        physics.addCollisionHandler(new CollisionHandler(PowerUp.PowerUpType.MULTIBALL, Type.GROUND) {
+            @Override
+            public void onCollisionBegin(Entity a, Entity b) {
+                //Was passiert wenn das PowerUp den Boden berührt?
+                //Es wird aus dem Spiel entfernt
+
+                a.removeFromWorld();
+            }
+        });
+        //Kollisionsabfrage zwischen PowerUp und Boden
+        physics.addCollisionHandler(new CollisionHandler(PowerUp.PowerUpType.BIGGER, Type.GROUND) {
+            @Override
+            public void onCollisionBegin(Entity a, Entity b) {
+                //Was passiert wenn das PowerUp den Boden berührt?
+                //Es wird aus dem Spiel entfernt
+
+                a.removeFromWorld();
+            }
+        });
+
+        //Kollisionsabfrage zwischen PowerUp und Boden
+        physics.addCollisionHandler(new CollisionHandler(PowerUp.PowerUpType.SMALLER, Type.GROUND) {
+            @Override
+            public void onCollisionBegin(Entity a, Entity b) {
+                //Was passiert wenn das PowerUp den Boden berührt?
+                //Es wird aus dem Spiel entfernt
+
+                a.removeFromWorld();
+            }
+        });
+
+
+    }
+
 
     public static void main(java.lang.String[] args) {
         launch(args);

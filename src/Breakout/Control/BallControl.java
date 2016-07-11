@@ -26,13 +26,13 @@ public class BallControl extends AbstractControl {
     @Override
     public void onUpdate(Entity entity, double tpf) {
 
-        Point2D v = ball.getLinearVelocity();
-        if (Math.abs(v.getY()) < 5) {
+        /*Point2D v = ball.getLinearVelocity();
+        if (Math.abs(v.getY()) < 2) {
             double x = v.getX();
             double signY = Math.signum(v.getY());
             ball.setLinearVelocity(x, signY * 5);
         }
-        if (Math.abs(v.getX()) < 5){
+        if (Math.abs(v.getX()) < 2){
 
             ball.setLinearVelocity(Math.signum(v.getX()) * 5,
                         v.getY());
@@ -40,9 +40,9 @@ public class BallControl extends AbstractControl {
         }
         if (Math.abs(v.getX()) >= 20 || Math.abs(v.getY()) >= 20 ){
 
-            ball.setLinearVelocity(Math.signum(v.getX()) * 15, Math.signum(v.getY() * 15));
+            ball.setLinearVelocity(Math.signum(v.getX()) * 20, Math.signum(v.getY() * 20));
 
-        }
+        }*/
     }
 
     public void speedUpBall(){
@@ -75,7 +75,7 @@ public class BallControl extends AbstractControl {
 
             Point2D p = position.getValue();
             BallFactory bf = new BallFactory();
-            Breakout.gameWorld.addEntities(bf.createMultiball(p, 1, "blue"));
+            Breakout.gameWorld.addEntities(bf.createMultiball(p, 1, "green"));
 
         }
 
