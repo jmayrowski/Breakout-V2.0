@@ -38,6 +38,7 @@ public class Breakout extends GameApplication {
     private String ballColor;
 
     private Text scoreText;
+    private Text lifesText;
 
     public static BatControl batControl;
     public static double ApplicationWidth;
@@ -50,6 +51,7 @@ public class Breakout extends GameApplication {
     private ArrayList<GameEntity> playField;
 
     private IntegerProperty score;
+    private IntegerProperty lifes;
 
     public enum Type {
         BAT, WALL, GROUND, BALL, MULTIBALL,
@@ -133,6 +135,7 @@ public class Breakout extends GameApplication {
 
         ballColor = "red";
         score = new SimpleIntegerProperty();
+        lifes = new SimpleIntegerProperty();
 
         gameWorld = getGameWorld();
 
@@ -155,6 +158,7 @@ public class Breakout extends GameApplication {
         fxmlUI.setTranslateY(getHeight() - 150);
 
         controller.getLabelScore().textProperty().bind(score.asString("Score: [%d]"));
+        controller.getLabelLifes().textProperty().bind(lifes.asString("Lives: " + lifes.get()));
 
         getGameScene().addUINode(fxmlUI);
     }
@@ -442,6 +446,7 @@ public class Breakout extends GameApplication {
                 //Er verschwindet, der Spieler verliert Punkte bzw. Leben
 
                 score.set(score.get() - 1000);
+                lifes.set(lifes.get() - 1);
                 BallFactory bf = new BallFactory();
                 bf.setBall(null);
                 a.removeFromWorld();

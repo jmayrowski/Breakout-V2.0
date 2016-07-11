@@ -11,10 +11,15 @@ import javafx.scene.control.Label;
 public class BreakoutUIController implements UIController {
 
     @FXML
-    private Label labelScore;
+    private Label labelScore = new Label();
+    private Label labelLifes = new Label();
 
     public Label getLabelScore() {
         return labelScore;
+    }
+
+    public Label getLabelLifes(){
+        return labelLifes;
     }
 
     @Override
@@ -22,6 +27,6 @@ public class BreakoutUIController implements UIController {
 
         //labelScore = new Label();
         labelScore.setFont(UIFactory.newFont(18));
-
+        labelLifes.setFont(UIFactory.newFont(18));
     }
 }
