@@ -39,10 +39,10 @@ public class BatControl extends AbstractControl {
         if(batPhysics != null){
 
             Point2D p = position.getValue();
-            if (p.getX() < 40) {
+            if (p.getX() < 65) {
                 batPhysics.setLinearVelocity(0, 0);
             }
-            else{batPhysics.setLinearVelocity(-10, 0);}
+            else{batPhysics.setLinearVelocity(-20, 0);}
         }
 
 
@@ -53,10 +53,10 @@ public class BatControl extends AbstractControl {
         if(batPhysics != null) {
 
             Point2D p = position.getValue();
-            if (p.getX() > (Breakout.ApplicationWidth - 175)) {
+            if (p.getX() > (Breakout.ApplicationWidth - 195)) {
                 batPhysics.setLinearVelocity(0, 0);
             }
-            else {batPhysics.setLinearVelocity(10, 0);}
+            else {batPhysics.setLinearVelocity(20, 0);}
 
         }
     }
