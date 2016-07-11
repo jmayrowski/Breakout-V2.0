@@ -240,8 +240,11 @@ public class Breakout extends GameApplication {
     protected void initPhysics() {
 
 
+
         //Kollisionsabfrage zw. Ball und Brick
         PhysicsWorld physics = getPhysicsWorld();
+
+        physics.setGravity(0,0.5f);
 
         physics.addCollisionHandler(new CollisionHandler(Type.BALL, Type.BRICK) {
             @Override

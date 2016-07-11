@@ -36,7 +36,7 @@ public class PowerUpSpawner implements PowerUp {
 
         powerUpPhysics.setBodyType(BodyType.DYNAMIC);
 
-        powerUpPhysics.setOnPhysicsInitialized(()-> powerUpPhysics.setLinearVelocity(0, 0.1f));
+        powerUpPhysics.setOnPhysicsInitialized(()-> powerUpPhysics.setLinearVelocity(0, 3));
 
         powerUp.addComponent(powerUpPhysics);
         powerUp.addComponent(new CollidableComponent(true));
