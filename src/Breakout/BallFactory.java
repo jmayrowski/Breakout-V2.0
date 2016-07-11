@@ -103,7 +103,7 @@ public class BallFactory {
 
         ballPhysics.setFixtureDef(fd);
 
-        ballPhysics.setOnPhysicsInitialized(() -> ballPhysics.setLinearVelocity(0,-2));
+        ballPhysics.setOnPhysicsInitialized(() -> ballPhysics.setLinearVelocity(0,-4));
 
         multiball.addComponent(ballPhysics);
         multiball.addComponent(new CollidableComponent(true));

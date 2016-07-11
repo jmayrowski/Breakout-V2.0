@@ -79,7 +79,8 @@ public class BatControl extends AbstractControl {
                 viewComponent.getView().removeFromScene();
                 BatFactory bf = new BatFactory();
 
-                Breakout.gameWorld.removeEntities(Breakout.bat, bat);
+                Breakout.gameWorld.getEntitiesByType(Breakout.Type.BAT).forEach(Entity::removeFromWorld);
+                //Breakout.gameWorld.removeEntities(Breakout.bat, bat);
 
                 bat = bf.createBat( position.getX() - (135 / 3), Breakout.ApplicationHeight - 32, "bats/bat_black_big.png");
                 Breakout.gameWorld.addEntities(bat);
@@ -93,7 +94,8 @@ public class BatControl extends AbstractControl {
                 viewComponent.getView().removeFromScene();
                 BatFactory bf = new BatFactory();
 
-                Breakout.gameWorld.removeEntities(Breakout.bat, bat );
+                Breakout.gameWorld.getEntitiesByType(Breakout.Type.BAT).forEach(Entity::removeFromWorld);
+                //Breakout.gameWorld.removeEntities(Breakout.bat, bat );
 
                 bat = bf.createBat( position.getX() - (300 / 3), Breakout.ApplicationHeight - 32, "bats/bat_black_bigger.png");
                 Breakout.gameWorld.addEntities(bat);
@@ -106,7 +108,8 @@ public class BatControl extends AbstractControl {
                 viewComponent.getView().removeFromScene();
                 BatFactory bf = new BatFactory();
 
-                Breakout.gameWorld.removeEntities(Breakout.bat, bat);
+                Breakout.gameWorld.getEntitiesByType(Breakout.Type.BAT).forEach(Entity::removeFromWorld);
+                //Breakout.gameWorld.removeEntities(Breakout.bat, bat);
 
                 bat = bf.createBat( position.getX() - 500 / 5  , Breakout.ApplicationHeight - 32, "bats/bat_black_biggest.png");
                 Breakout.gameWorld.addEntities(bat);
