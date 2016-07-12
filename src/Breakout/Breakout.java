@@ -10,7 +10,6 @@ import com.almasb.fxgl.app.ApplicationMode;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.entity.GameEntity;
 import com.almasb.fxgl.entity.component.PositionComponent;
-import com.almasb.fxgl.gameplay.Achievement;
 import com.almasb.fxgl.gameplay.GameWorld;
 import com.almasb.fxgl.input.ActionType;
 import com.almasb.fxgl.input.Input;
@@ -61,6 +60,7 @@ public class Breakout extends GameApplication {
     private IntegerProperty score;
     private IntegerProperty lifes;
     private IntegerProperty bricks;
+    private IntegerProperty levelCounter;
 
     public enum Type {
         BAT, WALL, GROUND, BALL, MULTIBALL,
@@ -101,9 +101,9 @@ public class Breakout extends GameApplication {
     @Override
     protected void initAchievements() {
 
-        Achievement levelAchievement = new Achievement("Rookie", "You finished the first level. Good Job!");
+        /*Achievement levelAchievement = new Achievement("Rookie", "You finished the first level. Good Job!");
 
-        getAchievementManager().registerAchievement(levelAchievement);
+        getAchievementManager().registerAchievement(levelAchievement);*/
     }
 
     @Override
@@ -170,7 +170,8 @@ public class Breakout extends GameApplication {
 
         ballColor = "red";
         score = new SimpleIntegerProperty();
-        lifes = new SimpleIntegerProperty(10);
+        lifes = new SimpleIntegerProperty(1000);
+        levelCounter = new SimpleIntegerProperty();
 
         gameWorld = getGameWorld();
 
@@ -274,7 +275,23 @@ public class Breakout extends GameApplication {
 
     private void initBrick() {
 
-        PlayField pf = new PlayField();
+        playField = new ArrayList<>();
+        playField = MultiPlayFieldFactory.getLevel(levelCounter.get());
+
+        for (int i = 0; i < 65; i++) {
+
+            if (playField.size() > i) {
+                { getGameWorld().addEntities(playField.get(i));}
+            } else break;
+        }
+        bricks = new SimpleIntegerProperty(playField.size());
+
+        playField.clear();
+
+        getInput().setProcessInput(true);
+
+        /// Dieser Code generiert 1 Playfield
+        /*PlayField pf = new PlayField();
 
         playField = new ArrayList<GameEntity>();
         playField = pf.getPlayField();
@@ -287,7 +304,7 @@ public class Breakout extends GameApplication {
         }
         bricks = new SimpleIntegerProperty(playField.size());
 
-        playField.clear();
+        playField.clear();*/
     }
 
     private void loseLife(){
@@ -313,15 +330,50 @@ public class Breakout extends GameApplication {
         if(bricks.get() == 0){
             getAudioPlayer().stopAllMusic();
 
-            getDisplay().showConfirmationBox("Congratulation!\nYou have won the Game.\nPlay again?", yes -> {
+            getDisplay().showConfirmationBox("Congratulation!\nYou have won the Game.\nNext Level?", yes -> {
                 if (yes) {
-                    startNewGame();
+                    nextLevel();
                 }
                 else {
                     exit();
                 }
             });
         }
+    }
+
+    private void nextLevel(){
+
+        getInput().setProcessInput(false);
+        cleanupLevel();
+
+        ballColor = "red";
+        score = new SimpleIntegerProperty();
+        lifes = new SimpleIntegerProperty(1000);
+
+        levelCounter.set(levelCounter.get() + 1);
+
+        if (levelCounter.get() <= MultiPlayFieldFactory.getPlayFieldCount()) {
+
+            gameWorld = getGameWorld();
+
+            //initGame();
+            initWalls();
+            initBat();
+            initBrick();
+            initBackground();
+
+            getAudioPlayer().playMusic(getAssetLoader().loadMusic("gamemusic.wav"));
+        }
+        else{
+
+            getDisplay().showConfirmationBox("You have finishes all Levels.\nStart a new Game?", yes -> {
+            if (yes) {
+                startNewGame();
+            }
+            else {
+                exit();
+            }
+        });}
     }
     private void showGameOver(){
 
@@ -338,7 +390,10 @@ public class Breakout extends GameApplication {
     }
     private void cleanupLevel() {
         getGameWorld().getEntitiesByType(
-                Type.BALL, Type.WALL, Type.BAT, Type.BRICK)
+                Type.BALL, Type.WALL, Type.BAT, Type.GROUND, Type.BRICK, Type.BRICK_FASTER_POWERUP, Type.BRICK_SLOWER_POWERUP,
+                Type.BRICK_MULTIBALL_POWERUP,  Type.BRICK_BIGGER_POWERUP, Type.BRICK_SMALLER_POWERUP,
+                PowerUp.PowerUpType.FASTER, PowerUp.PowerUpType.SLOWER, PowerUp.PowerUpType.MULTIBALL,
+                PowerUp.PowerUpType.BIGGER, PowerUp.PowerUpType.SMALLER)
                 .forEach(Entity::removeFromWorld);
     }
 

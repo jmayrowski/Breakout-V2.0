@@ -22,8 +22,11 @@ public class CodeGen extends LevelBaseListener {
     public int counter = 0;
     public String Tupelwert;
     public static int numberBricks;
-    static String inpath = "D:\\Programmierprojekte\\Breakout V2.0\\src\\CodeGenerator\\csv\\level_one.csv"; // Pfad
-    static String outpath = "D:\\Programmierprojekte\\Breakout V2.0\\src\\CodeGenerator\\out\\PlayField.java"; // Pfad
+    /*static String inpath = "D:\\Programmierprojekte\\Breakout V2.0\\src\\CodeGenerator\\csv\\level_one.csv"; // Pfad
+    static String outpath = "D:\\Programmierprojekte\\Breakout V2.0\\src\\CodeGenerator\\out\\PlayField.java"; // Pfad*/
+
+    static String inpath = "csv\\level_one.csv"; // Pfad
+    static String outpath = "out\\PlayField.java"; // Pfad
     public String output = "";
 
 
