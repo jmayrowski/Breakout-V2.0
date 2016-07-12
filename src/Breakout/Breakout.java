@@ -170,7 +170,7 @@ public class Breakout extends GameApplication {
 
         ballColor = "red";
         score = new SimpleIntegerProperty();
-        lifes = new SimpleIntegerProperty(1000);
+        lifes = new SimpleIntegerProperty(10);
 
         gameWorld = getGameWorld();
 
