@@ -50,6 +50,10 @@ public class BrickFactory {
             case 8:  textureName = "bricks/brick_yellow_small.png";
                 break;
             case 9:  textureName = "bricks/brick_yellow_small_cracked.png";
+                break;
+            case 10: textureName = "bricks/brick_silver_small.png";
+                break;
+            case 11:  textureName = "bricks/brick_gold_small.png";
 
                 break;
         }
@@ -78,8 +82,10 @@ public class BrickFactory {
                 break;
             case 5:
                 brickType = Breakout.Type.BRICK_SMALLER_POWERUP;
+                break;
             default:
                 brickType = Breakout.Type.BRICK;
+                break;
         }
         return brickType;
     }

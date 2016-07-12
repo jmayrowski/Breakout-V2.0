@@ -10,6 +10,7 @@ import com.almasb.fxgl.app.ApplicationMode;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.entity.GameEntity;
 import com.almasb.fxgl.entity.component.PositionComponent;
+import com.almasb.fxgl.gameplay.Achievement;
 import com.almasb.fxgl.gameplay.GameWorld;
 import com.almasb.fxgl.input.ActionType;
 import com.almasb.fxgl.input.Input;
@@ -19,6 +20,7 @@ import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.physics.PhysicsWorld;
 import com.almasb.fxgl.scene.menu.MenuStyle;
 import com.almasb.fxgl.settings.GameSettings;
+import com.almasb.fxgl.texture.Texture;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Point2D;
@@ -32,10 +34,11 @@ import java.util.ArrayList;
 public class Breakout extends GameApplication {
 
     private String batTexture;
-    private String ballTexture;
+    private Texture ballTexture;
     private String brickTexture;
     private String wallTexture;
     private String ballColor;
+    private Texture bgTexture;
 
     private Text scoreText;
     private Text lifesText;
@@ -60,6 +63,23 @@ public class Breakout extends GameApplication {
 
     }
 
+    private enum RenderLayer implements com.almasb.fxgl.entity.RenderLayer{
+
+        BACKGROUND(100);
+
+        private final int index;
+
+        RenderLayer(int index) {
+            this.index = index;
+        }
+
+        @Override
+            public int index() {
+                return index;
+            }
+    }
+
+
     @Override
     protected void initSettings(GameSettings settings) {
         settings.setTitle("Breakout");
@@ -70,6 +90,14 @@ public class Breakout extends GameApplication {
         settings.setMenuEnabled(false);
         settings.setApplicationMode(ApplicationMode.DEBUG);
         settings.setMenuStyle(MenuStyle.FXGL_DEFAULT);
+    }
+
+    @Override
+    protected void initAchievements() {
+
+        Achievement levelAchievement = new Achievement("Rookie", "You finished the first level. Good Job!");
+
+        getAchievementManager().registerAchievement(levelAchievement);
     }
 
     @Override
@@ -122,8 +150,8 @@ public class Breakout extends GameApplication {
     @Override
     protected void initAssets() {
 
-
-        ballTexture = "balls/ball_red.png";
+        bgTexture = getAssetLoader().loadTexture("background/background.jpg");
+        ballTexture = getAssetLoader().loadTexture("balls/ball_red.png");
         batTexture = "bats/bat_black.png";
         brickTexture = "bricks/brick_blue_small.png";
         wallTexture = "walls/brick_red.png";
@@ -135,9 +163,11 @@ public class Breakout extends GameApplication {
 
         ballColor = "red";
         score = new SimpleIntegerProperty();
-        lifes = new SimpleIntegerProperty();
+        lifes = new SimpleIntegerProperty(3);
 
         gameWorld = getGameWorld();
+
+        //getAchievementManager().getAchievementByName("Rookie").achievedProperty().
 
         initWalls();
         initBat();
@@ -154,16 +184,26 @@ public class Breakout extends GameApplication {
         BreakoutUIController controller = new BreakoutUIController();
 
         Parent fxmlUI = getAssetLoader().loadFXML("breakout_ui.fxml", controller);
-        fxmlUI.setTranslateX(getWidth() - 250);
-        fxmlUI.setTranslateY(getHeight() - 150);
+        fxmlUI.setTranslateX(getWidth() - 350);
+        fxmlUI.setTranslateY(getHeight() -155);
 
         controller.getLabelScore().textProperty().bind(score.asString("Score: [%d]"));
         controller.getLabelLifes().textProperty().bind(lifes.asString("Lives: " + lifes.get()));
 
-        getGameScene().addUINode(fxmlUI);
+        getGameScene().addUINodes(fxmlUI);
     }
 
     private void initBackground() {
+
+        GameEntity bg = new GameEntity();
+
+        bgTexture.setFitWidth(getWidth());
+        bgTexture.setFitHeight(getHeight());
+
+        bg.getMainViewComponent().setView(bgTexture);
+        bg.getMainViewComponent().setRenderLayer(RenderLayer.BACKGROUND);
+
+        getGameWorld().addEntity(bg);
 
     }
 
@@ -448,11 +488,13 @@ public class Breakout extends GameApplication {
                 //Was passiert wenn der Ball den Boden berührt?
                 //Er verschwindet, der Spieler verliert Punkte bzw. Leben
 
-                score.set(score.get() - 1000);
+                //score.set(score.get() - 1000);
                 lifes.set(lifes.get() - 1);
-                BallFactory bf = new BallFactory();
-                bf.setBall(null);
+
                 a.removeFromWorld();
+
+                Breakout.batControl.normalizeBatWidth();
+
 
 
             }

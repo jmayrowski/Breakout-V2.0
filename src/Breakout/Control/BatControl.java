@@ -52,8 +52,10 @@ public class BatControl extends AbstractControl {
 
         if(batPhysics != null) {
 
+            double batWidth = viewComponent.getView().getBoundsInLocal().getWidth();
+
             Point2D p = position.getValue();
-            if (p.getX() > (Breakout.ApplicationWidth - 195)) {
+            if (p.getX() > (Breakout.ApplicationWidth - (batWidth + 60 ))) {
                 batPhysics.setLinearVelocity(0, 0);
             }
             else {batPhysics.setLinearVelocity(20, 0);}
@@ -132,9 +134,33 @@ public class BatControl extends AbstractControl {
 
                 BatFactory bf = new BatFactory();
 
-                Breakout.gameWorld.removeEntities(Breakout.bat);
+                Breakout.gameWorld.getEntitiesByType(Breakout.Type.BAT).forEach(Entity::removeFromWorld);
 
                 Entity bat = bf.createBat( position.getX() + batWidth / 2  , Breakout.ApplicationHeight - 32, "bats/bat_black_mini.png");
+                Breakout.gameWorld.addEntities(bat);
+                Breakout.batControl = bat.getControlUnsafe(BatControl.class);
+
+            }
+        }
+
+    }
+
+    public void normalizeBatWidth(){
+
+        if(viewComponent != null){
+
+            double batWidth = viewComponent.getView().getBoundsInLocal().getWidth();
+
+            if(batWidth > 135 || batWidth <= 135 ) {
+
+                bbc.clearHitBoxes();
+                viewComponent.getView().removeFromScene();
+
+                BatFactory bf = new BatFactory();
+
+                Breakout.gameWorld.getEntitiesByType(Breakout.Type.BAT).forEach(Entity::removeFromWorld);
+
+                Entity bat = bf.createBat( position.getX() + batWidth / 2  , Breakout.ApplicationHeight - 32, "bats/bat_black.png");
                 Breakout.gameWorld.addEntities(bat);
                 Breakout.batControl = bat.getControlUnsafe(BatControl.class);
 

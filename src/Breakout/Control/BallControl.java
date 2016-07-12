@@ -27,34 +27,34 @@ public class BallControl extends AbstractControl {
     public void onUpdate(Entity entity, double tpf) {
 
         Point2D v = ball.getLinearVelocity();
-        if (Math.abs(v.getY()) < 5){
+        if (Math.abs(v.getY()) < 3 && Math.abs(v.getX()) < 3 ){
 
-            ball.setLinearVelocity(v.getX(), Math.signum( v.getY()) * 5);
+            ball.setLinearVelocity(Math.signum(v.getX()) * 3, Math.signum( v.getY()) * 3);
+
+        }
+
+        if (Math.abs(v.getX()) > 15 ){
+
+            ball.setLinearVelocity(Math.signum(v.getX()) * 15,  v.getY());
+
+        }
+        if (Math.abs(v.getY()) > 15 ){
+
+            ball.setLinearVelocity(v.getX() , Math.signum(v.getY()) * 15);
 
         }
 
-        if (Math.abs(v.getX()) < 5){
 
-            ball.setLinearVelocity(Math.signum(v.getX()) * 5, v.getY());
-
-        }
-        /*if (Math.abs(v.getX()) >= 10 && Math.abs(v.getY()) >= 10 ){
-
-            ball.setLinearVelocity(Math.signum(v.getX()) * 10, Math.signum(v.getY() * 10));
-
-        }*/
     }
 
     public void speedUpBall(){
 
         if(ball != null){
             Point2D v = ball.getLinearVelocity();
-            if (Math.abs(v.getY()) <= 15){
-                ball.setLinearVelocity(v.getX(), Math.signum(v.getY()) * 15);
+            if (Math.abs(v.getX()) <= 15 || Math.abs(v.getY()) <= 15 ){
+                ball.setLinearVelocity(Math.signum(v.getX()) * 15, Math.signum(v.getY()) * 15);
             }
-            if (Math.abs(v.getX()) <= 15){
-                ball.setLinearVelocity(Math.signum(v.getX()) * 15, v.getY());
-            }
+
         }
 
     }
@@ -63,11 +63,8 @@ public class BallControl extends AbstractControl {
 
         if(ball != null){
             Point2D v = ball.getLinearVelocity();
-            if (Math.abs(v.getY()) >= 5){
-                ball.setLinearVelocity(v.getX(), Math.signum(v.getY()));
-            }
-            if (Math.abs(v.getX()) >= 5){
-                ball.setLinearVelocity(Math.signum(v.getX()), v.getY());
+            if (Math.abs(v.getX()) >= 3 || Math.abs(v.getY()) >= 3 ){
+                ball.setLinearVelocity(Math.signum(v.getX()) * 3, Math.signum(v.getY()) * 3);
             }
 
         }

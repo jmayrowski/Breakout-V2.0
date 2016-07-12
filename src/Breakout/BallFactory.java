@@ -62,11 +62,11 @@ public class BallFactory {
 
         FixtureDef fd = new FixtureDef();
         fd.setDensity(0.3f);
-        fd.setRestitution(1.05f);
+        fd.setRestitution(1.07f);
         fd.setShape(new CircleShape());
         fd.getShape().setRadius((float) 13.5);
         ballPhysics.setFixtureDef(fd);
-        ballPhysics.setOnPhysicsInitialized(()->ballPhysics.setLinearVelocity(0,3));
+        ballPhysics.setOnPhysicsInitialized(()->ballPhysics.setLinearVelocity(0,4));
 
 
         ball.addComponent(ballPhysics);

@@ -12,6 +12,8 @@ public class BreakoutUIController implements UIController {
 
     @FXML
     private Label labelScore = new Label();
+
+    @FXML
     private Label labelLifes = new Label();
 
     public Label getLabelScore() {
