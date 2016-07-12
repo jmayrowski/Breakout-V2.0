@@ -1,7 +1,7 @@
 package CodeGenerator;
 
 
-import CodeGenerator.grammar.LevelBaseListener;
+import CodeGenerator.CodeGenerator.grammar.LevelBaseListener;
 import CodeGenerator.grammar.LevelLexer;
 import CodeGenerator.grammar.LevelParser;
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -19,10 +19,12 @@ import java.io.IOException;
  */
 public class CodeGen extends LevelBaseListener {
 
-    public static int counter = 0;
+    public int counter = 0;
     public String Tupelwert;
     public static int numberBricks;
-    static File file = new File("out\\PlayField.java"); // Pfad
+    static String inpath = "D:\\Programmierprojekte\\Breakout V2.0\\src\\CodeGenerator\\csv\\level_one.csv"; // Pfad
+    static String outpath = "D:\\Programmierprojekte\\Breakout V2.0\\src\\CodeGenerator\\out\\PlayField.java"; // Pfad
+    public String output = "";
 
 
 
@@ -30,13 +32,13 @@ public class CodeGen extends LevelBaseListener {
 
 
 
-        String pfad = file.getAbsolutePath();
+      /*  String pfad = file.getAbsolutePath();
 
         System.out.println(file.toString() + " successfully generated");
 
-        System.out.println(pfad);
+        System.out.println(pfad);*/
 
-        File inputFile = new File("csv\\level_one.csv");
+        File inputFile = new File(inpath);
         System.out.println(inputFile.getAbsolutePath());
 
 
@@ -53,26 +55,56 @@ public class CodeGen extends LevelBaseListener {
         LevelBaseListener listener = new CodeGen();
 
         walker.walk(listener,fileContext);
-        FileWriter writer = new FileWriter(file);
-        file.createNewFile();
-
-        for (int i = 0; i < numberBricks; i++){
-            writer.write("Anzahl der bricks " + counter);
-        }
+        FileWriter writer = new FileWriter(outpath);
+        new File (outpath).createNewFile();
 
 
+        System.out.print("Anzahl der bricks " + ((CodeGen)listener).getCount());
+
+
+
+        writer.write(((CodeGen)listener).getOutput());
         writer.flush();
         writer.close();
 
     }
 
+    public int getCount(){
+        return counter;
+    }
 
+    public String getOutput(){
+
+        return output;
+    }
+
+    @Override
+    public void enterFile(LevelParser.FileContext ctx) {
+        output += "package Breakout;\n" +
+                "\n" +
+                "import com.almasb.fxgl.entity.GameEntity;\n" +
+                "\n" +
+                "import java.util.ArrayList;\n" +
+                "\n" +
+                "/**\n" +
+                " * Created by Jasmin on 12.07.2016.\n" +
+                " */\n" +
+                "public class PlayField {\n" +
+                "\n" +
+                "\tpublic ArrayList<GameEntity> getPlayField(){\n" +
+                "\n" +
+                "\t\tBrickFactory bf = new BrickFactory();\n\n " +
+                "\t\tArrayList<GameEntity> playField = new ArrayList<>();\n"
+        ;
+    }
 
 
     @Override
     public void exitFile(LevelParser.FileContext ctx) {
-        System.out.println("/**Wenn kein Fehler auftaucht, dann wurde das File korrekt geparsed.*/");
-
+        //  System.out.println("/**Wenn kein Fehler auftaucht, dann wurde das File korrekt geparsed.*/");
+        output += "\t\treturn playField;\n" +
+                "\t}\n" +
+                "}\n";
     }
 
     @Override
@@ -80,5 +112,13 @@ public class CodeGen extends LevelBaseListener {
 
     }
 
+
+    @Override
+    public void enterTupel(LevelParser.TupelContext ctx) {
+        System.out.print(ctx.getText());
+        String[] tmp = ctx.getText().split("\\)");
+        output += "\t\tplayField.add(bf.initBrick"+tmp[0]+"));\n ";
+        counter++;
+    }
 
 }

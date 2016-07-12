@@ -1,6 +1,8 @@
+package CodeGenerator.CodeGenerator.grammar;
 // Generated from D:/Programmierprojekte/Breakout V2.0/src/CodeGenerator/grammar\Level.g4 by ANTLR 4.5.3
-package CodeGenerator.grammar;
 
+import CodeGenerator.grammar.LevelListener;
+import CodeGenerator.grammar.LevelParser;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
@@ -73,3 +75,4 @@ public class LevelBaseListener implements LevelListener {
 	 */
 	@Override public void visitErrorNode(ErrorNode node) { }
 }
+
