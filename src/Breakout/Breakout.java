@@ -188,7 +188,7 @@ public class Breakout extends GameApplication {
         fxmlUI.setTranslateY(getHeight() -155);
 
         controller.getLabelScore().textProperty().bind(score.asString("Score: [%d]"));
-        controller.getLabelLifes().textProperty().bind(lifes.asString("Lives: " + lifes.get()));
+        controller.getLabelLifes().textProperty().bind(lifes.asString("Lives: [%d]"));
 
         getGameScene().addUINodes(fxmlUI);
     }
