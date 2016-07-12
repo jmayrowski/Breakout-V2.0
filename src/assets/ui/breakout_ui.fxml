@@ -3,6 +3,7 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Pane?>
+<?import java.lang.Double?>
 <Pane prefWidth="180" prefHeight="720"
       xmlns="http://javafx.com/javafx/8.0.60"
       xmlns:fx="http://javafx.com/fxml/1">
@@ -10,5 +11,11 @@
     <Label fx:id="labelScore" translateX="150" translateY="100" />
 
     <Label fx:id="labelLifes" translateX="50" translateY="100" />
+
+    <fx:define>
+        <!-- position of lives -->
+        <Double fx:id="livesX" fx:value="100" />
+        <Double fx:id="livesY" fx:value="100" />
+    </fx:define>
 
 </Pane>

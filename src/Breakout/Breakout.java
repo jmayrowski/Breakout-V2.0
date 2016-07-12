@@ -29,6 +29,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
+import java.util.stream.IntStream;
 
 
 public class Breakout extends GameApplication {
@@ -40,21 +41,26 @@ public class Breakout extends GameApplication {
     private String ballColor;
     private Texture bgTexture;
 
+    private BreakoutUIController controller;
+
     private Text scoreText;
     private Text lifesText;
 
     public static BatControl batControl;
     public static double ApplicationWidth;
     public static double ApplicationHeight;
+    public static Texture lifeTexture;
     public static GameWorld gameWorld;
     public static Entity bat;
     public PositionComponent position;
     public GameEntity powerUp;
 
+
     private ArrayList<GameEntity> playField;
 
     private IntegerProperty score;
     private IntegerProperty lifes;
+    private IntegerProperty bricks;
 
     public enum Type {
         BAT, WALL, GROUND, BALL, MULTIBALL,
@@ -150,6 +156,7 @@ public class Breakout extends GameApplication {
     @Override
     protected void initAssets() {
 
+        lifeTexture = getAssetLoader().loadTexture("life.png");
         bgTexture = getAssetLoader().loadTexture("background/background.jpg");
         ballTexture = getAssetLoader().loadTexture("balls/ball_red.png");
         batTexture = "bats/bat_black.png";
@@ -163,7 +170,7 @@ public class Breakout extends GameApplication {
 
         ballColor = "red";
         score = new SimpleIntegerProperty();
-        lifes = new SimpleIntegerProperty(3);
+        lifes = new SimpleIntegerProperty(1000);
 
         gameWorld = getGameWorld();
 
@@ -175,13 +182,15 @@ public class Breakout extends GameApplication {
         initBackground();
         //initScreenBounds();
 
+        getAudioPlayer().playMusic(getAssetLoader().loadMusic("gamemusic.wav"));
+
 
     }
 
     @Override
     protected void initUI() {
 
-        BreakoutUIController controller = new BreakoutUIController();
+        controller = new BreakoutUIController(getGameScene());
 
         Parent fxmlUI = getAssetLoader().loadFXML("breakout_ui.fxml", controller);
         fxmlUI.setTranslateX(getWidth() - 350);
@@ -189,6 +198,10 @@ public class Breakout extends GameApplication {
 
         controller.getLabelScore().textProperty().bind(score.asString("Score: [%d]"));
         controller.getLabelLifes().textProperty().bind(lifes.asString("Lives: [%d]"));
+
+        IntStream.range(0, lifes.get())
+                .forEach(i -> controller.addLife());
+
 
         getGameScene().addUINodes(fxmlUI);
     }
@@ -272,8 +285,61 @@ public class Breakout extends GameApplication {
                 { getGameWorld().addEntities(playField.get(i));}
             } else break;
         }
+        bricks = new SimpleIntegerProperty(playField.size());
 
         playField.clear();
+    }
+
+    private void loseLife(){
+
+        lifes.set(lifes.get() - 1);
+
+        if (lifes.get() == 0)
+            showGameOver();
+
+    }
+    private void tutorial(){
+
+        //getInput().setRegisterInput(false);
+
+        /*TutorialStep step1 = new TutorialStep("Press A to move left", Asset.DIALOG_MOVE_LEFT, () -> {
+            getInput().mockKeyPress(KeyCode.A);
+        });*/
+    }
+
+    private void onBrickRemoved(){
+        bricks.set(bricks.get() - 1);
+
+        if(bricks.get() == 0){
+            getAudioPlayer().stopAllMusic();
+
+            getDisplay().showConfirmationBox("Congratulation!\nYou have won the Game.\nPlay again?", yes -> {
+                if (yes) {
+                    startNewGame();
+                }
+                else {
+                    exit();
+                }
+            });
+        }
+    }
+    private void showGameOver(){
+
+        getAudioPlayer().stopAllMusic();
+        //getAudioPlayer().playMusic();
+        getDisplay().showConfirmationBox("Game Over.\nContinue?", yes -> {
+            if (yes) {
+                startNewGame();
+            }
+            else {
+                exit();
+            }
+        });
+    }
+    private void cleanupLevel() {
+        getGameWorld().getEntitiesByType(
+                Type.BALL, Type.WALL, Type.BAT, Type.BRICK)
+                .forEach(Entity::removeFromWorld);
     }
 
     @Override
@@ -302,6 +368,8 @@ public class Breakout extends GameApplication {
             public void onCollisionEnd(Entity a, Entity b) {
 
                 b.removeFromWorld();
+                onBrickRemoved();
+
             }
         });
 
@@ -319,6 +387,7 @@ public class Breakout extends GameApplication {
                 position = b.getComponentUnsafe(PositionComponent.class);
                 Point2D p = position.getValue();
                 b.removeFromWorld();
+                onBrickRemoved();
 
                 PowerUpSpawner PUSpawner = new PowerUpSpawner();
                 powerUp = PUSpawner.spawnPowerUp(p, PowerUp.PowerUpType.FASTER, "yellow");
@@ -341,6 +410,7 @@ public class Breakout extends GameApplication {
                 position = b.getComponentUnsafe(PositionComponent.class);
                 Point2D p = position.getValue();
                 b.removeFromWorld();
+                onBrickRemoved();
 
                 PowerUpSpawner PUSpawner = new PowerUpSpawner();
                 powerUp = PUSpawner.spawnPowerUp(p, PowerUp.PowerUpType.SLOWER, "purple");
@@ -363,6 +433,7 @@ public class Breakout extends GameApplication {
                 position = b.getComponentUnsafe(PositionComponent.class);
                 Point2D p = position.getValue();
                 b.removeFromWorld();
+                onBrickRemoved();
 
                 PowerUpSpawner PUSpawner = new PowerUpSpawner();
                 powerUp = PUSpawner.spawnPowerUp(p, PowerUp.PowerUpType.MULTIBALL, "green");
@@ -385,6 +456,7 @@ public class Breakout extends GameApplication {
                 position = b.getComponentUnsafe(PositionComponent.class);
                 Point2D p = position.getValue();
                 b.removeFromWorld();
+                onBrickRemoved();
 
                 PowerUpSpawner PUSpawner = new PowerUpSpawner();
                 powerUp = PUSpawner.spawnPowerUp(p, PowerUp.PowerUpType.BIGGER, "blue");
@@ -407,6 +479,7 @@ public class Breakout extends GameApplication {
                 position = b.getComponentUnsafe(PositionComponent.class);
                 Point2D p = position.getValue();
                 b.removeFromWorld();
+                onBrickRemoved();
 
                 PowerUpSpawner PUSpawner = new PowerUpSpawner();
                 powerUp = PUSpawner.spawnPowerUp(p, PowerUp.PowerUpType.SMALLER, "red");
@@ -422,7 +495,7 @@ public class Breakout extends GameApplication {
                 //Block wird zerstört und es gibt Punkte, aber es werden keine PowerUps erzeugt
                 score.set(score.get() + 100);
                 b.removeFromWorld();
-
+                onBrickRemoved();
             }
         });
 
@@ -433,6 +506,7 @@ public class Breakout extends GameApplication {
                 //Block wird zerstört und es gibt Punkte, aber es werden keine PowerUps erzeugt
                 score.set(score.get() + 100);
                 b.removeFromWorld();
+                onBrickRemoved();
 
             }
         });
@@ -444,6 +518,7 @@ public class Breakout extends GameApplication {
                 //Block wird zerstört und es gibt Punkte, aber es werden keine PowerUps erzeugt
                 score.set(score.get() + 100);
                 b.removeFromWorld();
+                onBrickRemoved();
 
             }
         });
@@ -455,6 +530,7 @@ public class Breakout extends GameApplication {
                 //Block wird zerstört und es gibt Punkte, aber es werden keine PowerUps erzeugt
                 score.set(score.get() + 100);
                 b.removeFromWorld();
+                onBrickRemoved();
 
             }
         });
@@ -466,6 +542,7 @@ public class Breakout extends GameApplication {
                 //Block wird zerstört und es gibt Punkte, aber es werden keine PowerUps erzeugt
                 score.set(score.get() + 100);
                 b.removeFromWorld();
+                onBrickRemoved();
 
             }
         });
@@ -477,6 +554,7 @@ public class Breakout extends GameApplication {
                 //Block wird zerstört und es gibt Punkte, aber es werden keine PowerUps erzeugt
                 score.set(score.get() + 100);
                 b.removeFromWorld();
+                onBrickRemoved();
 
             }
         });
@@ -489,8 +567,8 @@ public class Breakout extends GameApplication {
                 //Er verschwindet, der Spieler verliert Punkte bzw. Leben
 
                 //score.set(score.get() - 1000);
-                lifes.set(lifes.get() - 1);
-
+                //lifes.set(lifes.get() - 1);
+                loseLife();
                 a.removeFromWorld();
 
                 Breakout.batControl.normalizeBatWidth();

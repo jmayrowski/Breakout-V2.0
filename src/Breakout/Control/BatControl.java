@@ -150,6 +150,7 @@ public class BatControl extends AbstractControl {
         if(viewComponent != null){
 
             double batWidth = viewComponent.getView().getBoundsInLocal().getWidth();
+            Point2D p = position.getValue();
 
             if(batWidth > 135 || batWidth <= 135 ) {
 
@@ -160,7 +161,7 @@ public class BatControl extends AbstractControl {
 
                 Breakout.gameWorld.getEntitiesByType(Breakout.Type.BAT).forEach(Entity::removeFromWorld);
 
-                Entity bat = bf.createBat( position.getX() + batWidth / 2  , Breakout.ApplicationHeight - 32, "bats/bat_black.png");
+                Entity bat = bf.createBat( p.getX(), p.getY(), "bats/bat_black.png");
                 Breakout.gameWorld.addEntities(bat);
                 Breakout.batControl = bat.getControlUnsafe(BatControl.class);
 
