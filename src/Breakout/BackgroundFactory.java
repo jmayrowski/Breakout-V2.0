@@ -11,13 +11,15 @@ public class BackgroundFactory {
         String BGTexture;
 
         switch (index){
-            case 0: BGTexture = "background/background.jpg";
+            case 0: BGTexture = "background/hills.png";
                 break;
-            case 1: BGTexture = "background/backgroundGalactic.png";
+            case 1: BGTexture = "background/background.jpg";
                 break;
-            case 2: BGTexture = "background/backgroundGreyWall.png";
+            case 2: BGTexture = "background/GreyWall.png";
                 break;
-            default: BGTexture = "background/background.jpg";
+            case 3: BGTexture = "background/Galactic.png";
+                break;
+            default: BGTexture = "background/hills.png";
                 break;
         }
         return BGTexture;
