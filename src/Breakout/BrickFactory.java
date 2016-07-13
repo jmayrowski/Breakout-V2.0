@@ -13,20 +13,10 @@ import org.jbox2d.dynamics.BodyType;
  */
 public class BrickFactory {
 
-    private BrickFactory brickFactory;
     private String textureName;
     private GameEntity brick;
     private Breakout.Type brickType;
     private static PhysicsComponent brickPhysics;
-
-
-    public BrickFactory getBrickFactory() {
-        return brickFactory;
-    }
-
-    public void setBrickFactory(BrickFactory brickFactory) {
-        this.brickFactory = brickFactory;
-    }
 
     public String chooseTextureColor(int colorKey){
 

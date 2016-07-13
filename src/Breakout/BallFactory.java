@@ -27,7 +27,7 @@ public class BallFactory {
         return ball;
     }
 
-    public GameEntity multiball;
+    private GameEntity multiball;
 
     public GameEntity getMultiball() {
         return multiball;

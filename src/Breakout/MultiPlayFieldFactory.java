@@ -5,136 +5,715 @@ import com.almasb.fxgl.entity.GameEntity;
 import java.util.ArrayList;
 
 /**
- * This project is created by Romano Waschewski and Jasmin Mayrowski
- * As mandatory libraries we use FXGL v. 0.2.4 and antlr v.4.5.3
+ * Created by Jasmin on 13/07/2016 23:14:09.
  */
 public class MultiPlayFieldFactory {
-
-    public static int getPlayFieldCount() {
-        return 6;
-    }
-
-    public static ArrayList<GameEntity> getLevel(int levelIndex){
-
-        if(levelIndex == 0){return getPlayFieldByIndex0();}
-        if(levelIndex == 1){return getPlayFieldByIndex1();}
-        if(levelIndex == 2){return getPlayFieldByIndex2();}
-        if(levelIndex == 3){return getPlayFieldByIndex3();}
-        if(levelIndex == 4){return getPlayFieldByIndex4();}
-        if(levelIndex == 5){return getPlayFieldByIndex5();}
-
-        return null;
-    }
 
     private static ArrayList<GameEntity> getPlayFieldByIndex0(){
 
         BrickFactory bf = new BrickFactory();
-        ArrayList<GameEntity> playField = new ArrayList<>();
+        ArrayList<GameEntity> playField = new ArrayList<GameEntity>();
+		playField.add(bf.initBrick(0,1,1));
+ 		playField.add(bf.initBrick(11,2,0));
+ 		playField.add(bf.initBrick(22,3,3));
+ 		playField.add(bf.initBrick(33,4,4));
+ 		playField.add(bf.initBrick(44,5,5));
+ 		playField.add(bf.initBrick(55,6,5));
+ 		playField.add(bf.initBrick(5,7,3));
+ 		playField.add(bf.initBrick(16,8));
+ 		playField.add(bf.initBrick(27,9));
+ 		playField.add(bf.initBrick(38,10));
+ 		playField.add(bf.initBrick(49,1));
+ 		playField.add(bf.initBrick(59,2));
+ 		playField.add(bf.initBrick(10,3));
+ 		playField.add(bf.initBrick(21,4));
+ 		playField.add(bf.initBrick(32,5));
+ 		playField.add(bf.initBrick(43,6));
+ 		playField.add(bf.initBrick(54,7));
+ 		playField.add(bf.initBrick(65,8));
+ 		playField.add(bf.initBrick(1,9));
+ 		playField.add(bf.initBrick(2,10));
+ 		playField.add(bf.initBrick(3,1));
+ 		playField.add(bf.initBrick(4,2));
+ 		playField.add(bf.initBrick(6,3));
+ 		playField.add(bf.initBrick(7,4));
+ 		playField.add(bf.initBrick(8,5));
+ 		playField.add(bf.initBrick(9,6));
+ 		playField.add(bf.initBrick(56,7));
+ 		playField.add(bf.initBrick(57,8));
+ 		playField.add(bf.initBrick(58,9));
+ 		playField.add(bf.initBrick(60,10,1));
+ 		playField.add(bf.initBrick(61,11));
+ 		playField.add(bf.initBrick(62,2));
+ 		playField.add(bf.initBrick(63,1));
+ 		playField.add(bf.initBrick(64,3));
+ 		return playField;
+	}
 
-        playField.add(bf.initBrick(0, 0, 0));
-        playField.add(bf.initBrick(1, 1, 0));
-        playField.add(bf.initBrick(2, 3, 0));
-        playField.add(bf.initBrick(3, 3, 4));
-        playField.add(bf.initBrick(4, 4, 0));
-        playField.add(bf.initBrick(5, 5, 0));
-        playField.add(bf.initBrick(6, 6, 2));
-        playField.add(bf.initBrick(7, 7, 0));
-        playField.add(bf.initBrick(8, 8, 0));
-        playField.add(bf.initBrick(9, 9, 0));
-        playField.add(bf.initBrick(10, 10, 0));
-        playField.add(bf.initBrick(11, 11, 0));
-        playField.add(bf.initBrick(12, 2, 0));
-
-        return playField;
-    }
     private static ArrayList<GameEntity> getPlayFieldByIndex1(){
 
         BrickFactory bf = new BrickFactory();
-        ArrayList<GameEntity> playField = new ArrayList<>();
+        ArrayList<GameEntity> playField = new ArrayList<GameEntity>();
+		playField.add(bf.initBrick(0,8,0));
+ 		playField.add(bf.initBrick(1,3,5));
+ 		playField.add(bf.initBrick(2,3,5));
+ 		playField.add(bf.initBrick(3,3,5));
+ 		playField.add(bf.initBrick(4,3,5));
+ 		playField.add(bf.initBrick(5,3,5));
+ 		playField.add(bf.initBrick(6,3,5));
+ 		playField.add(bf.initBrick(7,3,5));
+ 		playField.add(bf.initBrick(8,3,5));
+ 		playField.add(bf.initBrick(9,3,5));
+ 		playField.add(bf.initBrick(10,8,1));
+ 		playField.add(bf.initBrick(11,3,5));
+ 		playField.add(bf.initBrick(12,8,1));
+ 		playField.add(bf.initBrick(13,3,5));
+ 		playField.add(bf.initBrick(14,3,5));
+ 		playField.add(bf.initBrick(15,3,5));
+ 		playField.add(bf.initBrick(16,3,5));
+ 		playField.add(bf.initBrick(17,3,5));
+ 		playField.add(bf.initBrick(18,3,5));
+ 		playField.add(bf.initBrick(19,3,5));
+ 		playField.add(bf.initBrick(20,8,1));
+ 		playField.add(bf.initBrick(21,3,5));
+ 		playField.add(bf.initBrick(22,3,5));
+ 		playField.add(bf.initBrick(23,3,5));
+ 		playField.add(bf.initBrick(24,8,1));
+ 		playField.add(bf.initBrick(25,3,5));
+ 		playField.add(bf.initBrick(26,3,5));
+ 		playField.add(bf.initBrick(27,3,5));
+ 		playField.add(bf.initBrick(28,3,5));
+ 		playField.add(bf.initBrick(29,3,5));
+ 		playField.add(bf.initBrick(30,8,1));
+ 		playField.add(bf.initBrick(31,3,5));
+ 		playField.add(bf.initBrick(32,3,5));
+ 		playField.add(bf.initBrick(33,3,5));
+ 		playField.add(bf.initBrick(34,3,5));
+ 		playField.add(bf.initBrick(35,3,5));
+ 		playField.add(bf.initBrick(36,8,1));
+ 		playField.add(bf.initBrick(37,3,5));
+ 		playField.add(bf.initBrick(38,3,5));
+ 		playField.add(bf.initBrick(39,3,5));
+ 		playField.add(bf.initBrick(40,8,1));
+ 		playField.add(bf.initBrick(41,3,5));
+ 		playField.add(bf.initBrick(42,3,5));
+ 		playField.add(bf.initBrick(43,3,5));
+ 		playField.add(bf.initBrick(44,3,5));
+ 		playField.add(bf.initBrick(45,3,5));
+ 		playField.add(bf.initBrick(46,3,5));
+ 		playField.add(bf.initBrick(47,3,5));
+ 		playField.add(bf.initBrick(48,8,1));
+ 		playField.add(bf.initBrick(49,3,5));
+ 		playField.add(bf.initBrick(50,8,1));
+ 		playField.add(bf.initBrick(51,3,5));
+ 		playField.add(bf.initBrick(52,3,5));
+ 		playField.add(bf.initBrick(53,3,5));
+ 		playField.add(bf.initBrick(54,3,5));
+ 		playField.add(bf.initBrick(55,3,5));
+ 		playField.add(bf.initBrick(56,3,5));
+ 		playField.add(bf.initBrick(57,3,5));
+ 		playField.add(bf.initBrick(58,3,5));
+ 		playField.add(bf.initBrick(59,3,5));
+ 		playField.add(bf.initBrick(60,8,1));
+ 		playField.add(bf.initBrick(61,3,5));
+ 		playField.add(bf.initBrick(62,3,5));
+ 		playField.add(bf.initBrick(63,3,5));
+ 		playField.add(bf.initBrick(64,3,5));
+ 		playField.add(bf.initBrick(65,3,5));
+ 		return playField;
+	}
 
-        playField.add(bf.initBrick(0, 4));
-        playField.add(bf.initBrick(1, 5, 0));
-        playField.add(bf.initBrick(2, 6, 0));
-        playField.add(bf.initBrick(3, 7, 4));
-        playField.add(bf.initBrick(4, 8, 0));
-        playField.add(bf.initBrick(5, 9, 0));
-        playField.add(bf.initBrick(6, 10, 2));
-        playField.add(bf.initBrick(7, 11, 0));
-        playField.add(bf.initBrick(8, 0, 0));
-        playField.add(bf.initBrick(9, 2, 3));
-
-        return playField;
-    }
     private static ArrayList<GameEntity> getPlayFieldByIndex2(){
 
         BrickFactory bf = new BrickFactory();
-        ArrayList<GameEntity> playField = new ArrayList<>();
+        ArrayList<GameEntity> playField = new ArrayList<GameEntity>();
+		playField.add(bf.initBrick(1,1,2));
+ 		playField.add(bf.initBrick(2,2,3));
+ 		playField.add(bf.initBrick(3,3,1));
+ 		playField.add(bf.initBrick(4,4,0));
+ 		playField.add(bf.initBrick(5,5,0));
+ 		playField.add(bf.initBrick(6,6,5));
+ 		playField.add(bf.initBrick(7,7,4));
+ 		playField.add(bf.initBrick(8,8,2));
+ 		playField.add(bf.initBrick(9,4,3));
+ 		playField.add(bf.initBrick(10,2,1));
+ 		playField.add(bf.initBrick(11,2,1));
+ 		playField.add(bf.initBrick(12,2,3));
+ 		playField.add(bf.initBrick(13,1,1));
+ 		playField.add(bf.initBrick(14,1,2));
+ 		playField.add(bf.initBrick(15,1,3));
+ 		playField.add(bf.initBrick(16,4,5));
+ 		playField.add(bf.initBrick(17,5,0));
+ 		playField.add(bf.initBrick(18,4,2));
+ 		playField.add(bf.initBrick(19,1,1));
+ 		playField.add(bf.initBrick(20,1,1));
+ 		playField.add(bf.initBrick(21,1,1));
+ 		playField.add(bf.initBrick(22,1,1));
+ 		playField.add(bf.initBrick(23,1,1));
+ 		playField.add(bf.initBrick(24,1,1));
+ 		playField.add(bf.initBrick(25,1,1));
+ 		playField.add(bf.initBrick(26,1,1));
+ 		playField.add(bf.initBrick(27,1,1));
+ 		playField.add(bf.initBrick(28,1,1));
+ 		playField.add(bf.initBrick(29,1,1));
+ 		playField.add(bf.initBrick(30,1,0));
+ 		playField.add(bf.initBrick(30,1,0));
+ 		playField.add(bf.initBrick(30,2,0));
+ 		playField.add(bf.initBrick(31,2,0));
+ 		playField.add(bf.initBrick(32,2,0));
+ 		playField.add(bf.initBrick(33,2,0));
+ 		playField.add(bf.initBrick(34,2,0));
+ 		playField.add(bf.initBrick(35,2,0));
+ 		playField.add(bf.initBrick(36,2,0));
+ 		playField.add(bf.initBrick(37,2,0));
+ 		playField.add(bf.initBrick(38,2,0));
+ 		playField.add(bf.initBrick(39,2,0));
+ 		playField.add(bf.initBrick(40,2,0));
+ 		playField.add(bf.initBrick(41,2,0));
+ 		playField.add(bf.initBrick(42,3,0));
+ 		playField.add(bf.initBrick(43,3,0));
+ 		playField.add(bf.initBrick(44,3,0));
+ 		playField.add(bf.initBrick(45,3,0));
+ 		playField.add(bf.initBrick(46,3,0));
+ 		playField.add(bf.initBrick(47,3,0));
+ 		playField.add(bf.initBrick(48,3,0));
+ 		playField.add(bf.initBrick(49,3,0));
+ 		playField.add(bf.initBrick(50,3,0));
+ 		playField.add(bf.initBrick(51,3,0));
+ 		playField.add(bf.initBrick(52,3,0));
+ 		playField.add(bf.initBrick(53,3,0));
+ 		playField.add(bf.initBrick(54,3,0));
+ 		playField.add(bf.initBrick(55,3,0));
+ 		playField.add(bf.initBrick(56,5,0));
+ 		playField.add(bf.initBrick(57,5,0));
+ 		playField.add(bf.initBrick(58,5,0));
+ 		playField.add(bf.initBrick(59,5,0));
+ 		playField.add(bf.initBrick(60,5,0));
+ 		playField.add(bf.initBrick(61,5,0));
+ 		playField.add(bf.initBrick(62,5,0));
+ 		playField.add(bf.initBrick(63,5,0));
+ 		playField.add(bf.initBrick(64,5,0));
+ 		playField.add(bf.initBrick(65,5,0));
+ 		return playField;
+	}
 
-        playField.add(bf.initBrick(0, 4));
-        playField.add(bf.initBrick(1, 4, 0));
-        playField.add(bf.initBrick(2, 4, 0));
-        playField.add(bf.initBrick(3, 4, 4));
-        playField.add(bf.initBrick(4, 4, 0));
-        playField.add(bf.initBrick(5, 4, 0));
-        playField.add(bf.initBrick(6, 4, 2));
-        playField.add(bf.initBrick(7, 4, 0));
-        playField.add(bf.initBrick(8, 4, 0));
-        playField.add(bf.initBrick(9, 4, 3));
-
-        return playField;
-    }
     private static ArrayList<GameEntity> getPlayFieldByIndex3(){
 
         BrickFactory bf = new BrickFactory();
-        ArrayList<GameEntity> playField = new ArrayList<>();
+        ArrayList<GameEntity> playField = new ArrayList<GameEntity>();
+		playField.add(bf.initBrick(0,1,0));
+ 		playField.add(bf.initBrick(1,1,0));
+ 		playField.add(bf.initBrick(2,1,0));
+ 		playField.add(bf.initBrick(3,1,0));
+ 		playField.add(bf.initBrick(4,1,0));
+ 		playField.add(bf.initBrick(5,2,0));
+ 		playField.add(bf.initBrick(6,2,0));
+ 		playField.add(bf.initBrick(7,2,0));
+ 		playField.add(bf.initBrick(8,2,0));
+ 		playField.add(bf.initBrick(9,2,0));
+ 		playField.add(bf.initBrick(10,1,0));
+ 		playField.add(bf.initBrick(11,1,0));
+ 		playField.add(bf.initBrick(12,1,0));
+ 		playField.add(bf.initBrick(13,1,0));
+ 		playField.add(bf.initBrick(14,8,0));
+ 		playField.add(bf.initBrick(15,8,0));
+ 		playField.add(bf.initBrick(16,8,1));
+ 		playField.add(bf.initBrick(17,8,1));
+ 		playField.add(bf.initBrick(18,8,1));
+ 		playField.add(bf.initBrick(19,8,1));
+ 		playField.add(bf.initBrick(20,8,0));
+ 		playField.add(bf.initBrick(21,8,0));
+ 		playField.add(bf.initBrick(22,1,0));
+ 		playField.add(bf.initBrick(23,1,0));
+ 		playField.add(bf.initBrick(24,1,0));
+ 		playField.add(bf.initBrick(25,1,0));
+ 		playField.add(bf.initBrick(26,1,0));
+ 		playField.add(bf.initBrick(27,1,0));
+ 		playField.add(bf.initBrick(28,1,0));
+ 		playField.add(bf.initBrick(29,1,0));
+ 		playField.add(bf.initBrick(30,1,0));
+ 		playField.add(bf.initBrick(31,1,0));
+ 		playField.add(bf.initBrick(32,6,0));
+ 		playField.add(bf.initBrick(33,6,0));
+ 		playField.add(bf.initBrick(34,6,3));
+ 		playField.add(bf.initBrick(35,6,3));
+ 		playField.add(bf.initBrick(36,6,3));
+ 		playField.add(bf.initBrick(37,6,3));
+ 		playField.add(bf.initBrick(38,6,3));
+ 		playField.add(bf.initBrick(39,6,0));
+ 		playField.add(bf.initBrick(40,6,0));
+ 		playField.add(bf.initBrick(41,1,0));
+ 		playField.add(bf.initBrick(42,1,0));
+ 		playField.add(bf.initBrick(43,1,0));
+ 		playField.add(bf.initBrick(44,1,0));
+ 		playField.add(bf.initBrick(45,1,0));
+ 		playField.add(bf.initBrick(46,1,4));
+ 		playField.add(bf.initBrick(47,1,4));
+ 		playField.add(bf.initBrick(48,1,4));
+ 		playField.add(bf.initBrick(49,1,4));
+ 		playField.add(bf.initBrick(50,1,4));
+ 		playField.add(bf.initBrick(51,1,4));
+ 		playField.add(bf.initBrick(52,1,4));
+ 		playField.add(bf.initBrick(53,1,0));
+ 		playField.add(bf.initBrick(54,3,0));
+ 		playField.add(bf.initBrick(55,3,0));
+ 		playField.add(bf.initBrick(56,3,0));
+ 		playField.add(bf.initBrick(57,3,3));
+ 		playField.add(bf.initBrick(58,3,3));
+ 		playField.add(bf.initBrick(59,3,3));
+ 		playField.add(bf.initBrick(60,3,3));
+ 		playField.add(bf.initBrick(61,3,3));
+ 		playField.add(bf.initBrick(62,3,0));
+ 		playField.add(bf.initBrick(63,3,0));
+ 		playField.add(bf.initBrick(64,1,0));
+ 		playField.add(bf.initBrick(65,1,0));
+ 		return playField;
+	}
 
-        playField.add(bf.initBrick(0, 5));
-        playField.add(bf.initBrick(1, 5, 0));
-        playField.add(bf.initBrick(2, 5, 0));
-        playField.add(bf.initBrick(3, 5, 4));
-        playField.add(bf.initBrick(4, 5, 0));
-        playField.add(bf.initBrick(5, 5, 0));
-        playField.add(bf.initBrick(6, 5, 2));
-        playField.add(bf.initBrick(7, 5, 0));
-        playField.add(bf.initBrick(8, 5, 0));
-        playField.add(bf.initBrick(9, 5, 3));
-
-        return playField;
-    }
     private static ArrayList<GameEntity> getPlayFieldByIndex4(){
 
         BrickFactory bf = new BrickFactory();
-        ArrayList<GameEntity> playField = new ArrayList<>();
+        ArrayList<GameEntity> playField = new ArrayList<GameEntity>();
+		playField.add(bf.initBrick(0,6));
+ 		playField.add(bf.initBrick(1,6));
+ 		playField.add(bf.initBrick(2,6));
+ 		playField.add(bf.initBrick(3,6));
+ 		playField.add(bf.initBrick(4,6));
+ 		playField.add(bf.initBrick(5,6));
+ 		playField.add(bf.initBrick(6,6));
+ 		playField.add(bf.initBrick(7,6));
+ 		playField.add(bf.initBrick(8,6));
+ 		playField.add(bf.initBrick(9,6));
+ 		playField.add(bf.initBrick(10,6));
+ 		playField.add(bf.initBrick(11,6));
+ 		playField.add(bf.initBrick(12,6));
+ 		playField.add(bf.initBrick(13,6));
+ 		playField.add(bf.initBrick(14,6));
+ 		playField.add(bf.initBrick(15,6));
+ 		playField.add(bf.initBrick(16,6));
+ 		playField.add(bf.initBrick(17,6));
+ 		playField.add(bf.initBrick(18,3));
+ 		playField.add(bf.initBrick(19,3));
+ 		playField.add(bf.initBrick(20,3));
+ 		playField.add(bf.initBrick(21,3));
+ 		playField.add(bf.initBrick(22,3));
+ 		playField.add(bf.initBrick(23,3));
+ 		playField.add(bf.initBrick(24,3));
+ 		playField.add(bf.initBrick(25,3));
+ 		playField.add(bf.initBrick(26,3));
+ 		playField.add(bf.initBrick(27,3));
+ 		playField.add(bf.initBrick(28,3));
+ 		playField.add(bf.initBrick(29,3));
+ 		playField.add(bf.initBrick(30,6));
+ 		playField.add(bf.initBrick(31,6));
+ 		playField.add(bf.initBrick(32,6));
+ 		playField.add(bf.initBrick(33,6));
+ 		playField.add(bf.initBrick(34,6));
+ 		playField.add(bf.initBrick(35,6));
+ 		playField.add(bf.initBrick(36,6));
+ 		playField.add(bf.initBrick(37,6));
+ 		playField.add(bf.initBrick(38,6));
+ 		playField.add(bf.initBrick(39,6));
+ 		playField.add(bf.initBrick(40,6));
+ 		playField.add(bf.initBrick(41,4));
+ 		playField.add(bf.initBrick(42,4));
+ 		playField.add(bf.initBrick(43,4));
+ 		playField.add(bf.initBrick(44,4));
+ 		playField.add(bf.initBrick(45,4));
+ 		playField.add(bf.initBrick(46,4));
+ 		playField.add(bf.initBrick(47,4));
+ 		playField.add(bf.initBrick(48,4));
+ 		playField.add(bf.initBrick(49,4));
+ 		playField.add(bf.initBrick(50,4));
+ 		playField.add(bf.initBrick(51,4));
+ 		playField.add(bf.initBrick(52,4));
+ 		playField.add(bf.initBrick(53,4));
+ 		playField.add(bf.initBrick(54,5));
+ 		playField.add(bf.initBrick(55,5));
+ 		playField.add(bf.initBrick(56,5));
+ 		playField.add(bf.initBrick(57,5));
+ 		playField.add(bf.initBrick(58,5));
+ 		playField.add(bf.initBrick(59,5));
+ 		playField.add(bf.initBrick(60,5));
+ 		playField.add(bf.initBrick(61,5));
+ 		playField.add(bf.initBrick(62,5));
+ 		playField.add(bf.initBrick(63,5));
+ 		playField.add(bf.initBrick(64,5));
+ 		playField.add(bf.initBrick(65,5));
+ 		return playField;
+	}
 
-        playField.add(bf.initBrick(0, 4));
-        playField.add(bf.initBrick(1, 4, 0));
-        playField.add(bf.initBrick(2, 4, 0));
-        playField.add(bf.initBrick(3, 4, 4));
-        playField.add(bf.initBrick(4, 4, 0));
-        playField.add(bf.initBrick(5, 4, 0));
-        playField.add(bf.initBrick(6, 4, 2));
-        playField.add(bf.initBrick(7, 4, 0));
-        playField.add(bf.initBrick(8, 4, 0));
-        playField.add(bf.initBrick(9, 4, 3));
-
-        return playField;
-    }
     private static ArrayList<GameEntity> getPlayFieldByIndex5(){
 
         BrickFactory bf = new BrickFactory();
-        ArrayList<GameEntity> playField = new ArrayList<>();
+        ArrayList<GameEntity> playField = new ArrayList<GameEntity>();
+		playField.add(bf.initBrick(0,8));
+ 		playField.add(bf.initBrick(1,8));
+ 		playField.add(bf.initBrick(2,8));
+ 		playField.add(bf.initBrick(3,8));
+ 		playField.add(bf.initBrick(4,8));
+ 		playField.add(bf.initBrick(5,8));
+ 		playField.add(bf.initBrick(6,8));
+ 		playField.add(bf.initBrick(7,8));
+ 		playField.add(bf.initBrick(8,8));
+ 		playField.add(bf.initBrick(9,8));
+ 		playField.add(bf.initBrick(10,9));
+ 		playField.add(bf.initBrick(11,9));
+ 		playField.add(bf.initBrick(12,9));
+ 		playField.add(bf.initBrick(13,9));
+ 		playField.add(bf.initBrick(14,9));
+ 		playField.add(bf.initBrick(15,9));
+ 		playField.add(bf.initBrick(16,9));
+ 		playField.add(bf.initBrick(17,9));
+ 		playField.add(bf.initBrick(18,9));
+ 		playField.add(bf.initBrick(19,9));
+ 		playField.add(bf.initBrick(20,9));
+ 		playField.add(bf.initBrick(21,9));
+ 		playField.add(bf.initBrick(22,10));
+ 		playField.add(bf.initBrick(23,10));
+ 		playField.add(bf.initBrick(24,10));
+ 		playField.add(bf.initBrick(25,10));
+ 		playField.add(bf.initBrick(26,10));
+ 		playField.add(bf.initBrick(27,10));
+ 		playField.add(bf.initBrick(28,10));
+ 		playField.add(bf.initBrick(29,10));
+ 		playField.add(bf.initBrick(30,10));
+ 		playField.add(bf.initBrick(31,10));
+ 		playField.add(bf.initBrick(32,10));
+ 		playField.add(bf.initBrick(33,3));
+ 		playField.add(bf.initBrick(34,3));
+ 		playField.add(bf.initBrick(35,3));
+ 		playField.add(bf.initBrick(36,3));
+ 		playField.add(bf.initBrick(37,3));
+ 		playField.add(bf.initBrick(38,3));
+ 		playField.add(bf.initBrick(39,3));
+ 		playField.add(bf.initBrick(40,3));
+ 		playField.add(bf.initBrick(41,3));
+ 		playField.add(bf.initBrick(42,3));
+ 		playField.add(bf.initBrick(43,2));
+ 		playField.add(bf.initBrick(44,2));
+ 		playField.add(bf.initBrick(45,2));
+ 		playField.add(bf.initBrick(46,2));
+ 		playField.add(bf.initBrick(47,2));
+ 		playField.add(bf.initBrick(48,2));
+ 		playField.add(bf.initBrick(49,1));
+ 		playField.add(bf.initBrick(50,1));
+ 		playField.add(bf.initBrick(51,1));
+ 		playField.add(bf.initBrick(52,1));
+ 		playField.add(bf.initBrick(53,1));
+ 		playField.add(bf.initBrick(54,1));
+ 		playField.add(bf.initBrick(55,1));
+ 		playField.add(bf.initBrick(56,1));
+ 		playField.add(bf.initBrick(57,1));
+ 		playField.add(bf.initBrick(58,1));
+ 		playField.add(bf.initBrick(59,6));
+ 		playField.add(bf.initBrick(60,6));
+ 		playField.add(bf.initBrick(61,6));
+ 		playField.add(bf.initBrick(62,6));
+ 		playField.add(bf.initBrick(63,6));
+ 		playField.add(bf.initBrick(64,6));
+ 		playField.add(bf.initBrick(65,6));
+ 		return playField;
+	}
 
-        playField.add(bf.initBrick(0, 1));
-        playField.add(bf.initBrick(1, 1, 0));
-        playField.add(bf.initBrick(2, 1, 0));
-        playField.add(bf.initBrick(3, 1, 4));
-        playField.add(bf.initBrick(4, 1, 0));
-        playField.add(bf.initBrick(5, 1, 0));
-        playField.add(bf.initBrick(6, 1, 2));
-        playField.add(bf.initBrick(7, 1, 0));
-        playField.add(bf.initBrick(8, 1, 0));
-        playField.add(bf.initBrick(9, 1, 3));
+    private static ArrayList<GameEntity> getPlayFieldByIndex6(){
 
-        return playField;
+        BrickFactory bf = new BrickFactory();
+        ArrayList<GameEntity> playField = new ArrayList<GameEntity>();
+		playField.add(bf.initBrick(0,4));
+ 		playField.add(bf.initBrick(1,4,0));
+ 		playField.add(bf.initBrick(2,4,0));
+ 		playField.add(bf.initBrick(3,4,4));
+ 		playField.add(bf.initBrick(4,4,0));
+ 		playField.add(bf.initBrick(5,4,0));
+ 		playField.add(bf.initBrick(6,4,2));
+ 		playField.add(bf.initBrick(7,4,0));
+ 		playField.add(bf.initBrick(8,4,0));
+ 		playField.add(bf.initBrick(9,4,3));
+ 		playField.add(bf.initBrick(10,4,0));
+ 		playField.add(bf.initBrick(11,6,1));
+ 		playField.add(bf.initBrick(12,6,0));
+ 		playField.add(bf.initBrick(13,6,0));
+ 		playField.add(bf.initBrick(14,6,0));
+ 		playField.add(bf.initBrick(15,6,0));
+ 		playField.add(bf.initBrick(16,6,4));
+ 		playField.add(bf.initBrick(17,6,0));
+ 		playField.add(bf.initBrick(18,6,2));
+ 		playField.add(bf.initBrick(19,6,0));
+ 		playField.add(bf.initBrick(20,6,0));
+ 		playField.add(bf.initBrick(21,6,0));
+ 		playField.add(bf.initBrick(22,0,0));
+ 		playField.add(bf.initBrick(23,0,0));
+ 		playField.add(bf.initBrick(24,0,0));
+ 		playField.add(bf.initBrick(25,0,4));
+ 		playField.add(bf.initBrick(26,0,0));
+ 		playField.add(bf.initBrick(27,0,0));
+ 		playField.add(bf.initBrick(28,0,5));
+ 		playField.add(bf.initBrick(29,0,0));
+ 		playField.add(bf.initBrick(30,0,0));
+ 		playField.add(bf.initBrick(31,0));
+ 		playField.add(bf.initBrick(32,0,1));
+ 		playField.add(bf.initBrick(33,2,0));
+ 		playField.add(bf.initBrick(34,2,5));
+ 		playField.add(bf.initBrick(35,2,0));
+ 		playField.add(bf.initBrick(36,2,0));
+ 		playField.add(bf.initBrick(37,2,4));
+ 		playField.add(bf.initBrick(38,2,0));
+ 		playField.add(bf.initBrick(39,2,0));
+ 		playField.add(bf.initBrick(40,2,1));
+ 		playField.add(bf.initBrick(41,2,0));
+ 		playField.add(bf.initBrick(42,2));
+ 		playField.add(bf.initBrick(43,2,3));
+ 		playField.add(bf.initBrick(44,8,0));
+ 		playField.add(bf.initBrick(45,8,4));
+ 		playField.add(bf.initBrick(46,8,0));
+ 		playField.add(bf.initBrick(47,8,0));
+ 		playField.add(bf.initBrick(48,8,0));
+ 		playField.add(bf.initBrick(49,8,5));
+ 		playField.add(bf.initBrick(50,8,0));
+ 		playField.add(bf.initBrick(51,8,0));
+ 		playField.add(bf.initBrick(52,8,3));
+ 		playField.add(bf.initBrick(53,8));
+ 		playField.add(bf.initBrick(54,8,0));
+ 		return playField;
+	}
+
+    private static ArrayList<GameEntity> getPlayFieldByIndex7(){
+
+        BrickFactory bf = new BrickFactory();
+        ArrayList<GameEntity> playField = new ArrayList<GameEntity>();
+		playField.add(bf.initBrick(0,11,0));
+ 		playField.add(bf.initBrick(1,0,0));
+ 		playField.add(bf.initBrick(2,0,0));
+ 		playField.add(bf.initBrick(3,0,4));
+ 		playField.add(bf.initBrick(4,0,0));
+ 		playField.add(bf.initBrick(5,0,0));
+ 		playField.add(bf.initBrick(6,0,2));
+ 		playField.add(bf.initBrick(7,0,0));
+ 		playField.add(bf.initBrick(8,0,0));
+ 		playField.add(bf.initBrick(9,0,3));
+ 		playField.add(bf.initBrick(10,11,1));
+ 		playField.add(bf.initBrick(11,0,1));
+ 		playField.add(bf.initBrick(12,11,1));
+ 		playField.add(bf.initBrick(13,0,0));
+ 		playField.add(bf.initBrick(14,0,0));
+ 		playField.add(bf.initBrick(15,0,0));
+ 		playField.add(bf.initBrick(16,0,4));
+ 		playField.add(bf.initBrick(17,0,0));
+ 		playField.add(bf.initBrick(18,0,2));
+ 		playField.add(bf.initBrick(19,0,0));
+ 		playField.add(bf.initBrick(20,11,1));
+ 		playField.add(bf.initBrick(21,0,0));
+ 		playField.add(bf.initBrick(22,0,0));
+ 		playField.add(bf.initBrick(23,0,0));
+ 		playField.add(bf.initBrick(24,11,1));
+ 		playField.add(bf.initBrick(25,0,4));
+ 		playField.add(bf.initBrick(26,0,0));
+ 		playField.add(bf.initBrick(27,0,0));
+ 		playField.add(bf.initBrick(28,0,0));
+ 		playField.add(bf.initBrick(29,0,0));
+ 		playField.add(bf.initBrick(30,11,1));
+ 		playField.add(bf.initBrick(31,0,2));
+ 		playField.add(bf.initBrick(32,0,0));
+ 		playField.add(bf.initBrick(33,0,0));
+ 		playField.add(bf.initBrick(34,0,5));
+ 		playField.add(bf.initBrick(35,0,0));
+ 		playField.add(bf.initBrick(36,11,1));
+ 		playField.add(bf.initBrick(37,0,3));
+ 		playField.add(bf.initBrick(38,0,0));
+ 		playField.add(bf.initBrick(39,0,0));
+ 		playField.add(bf.initBrick(40,11,1));
+ 		playField.add(bf.initBrick(41,0,0));
+ 		playField.add(bf.initBrick(42,0,4));
+ 		playField.add(bf.initBrick(43,0,3));
+ 		playField.add(bf.initBrick(44,0,0));
+ 		playField.add(bf.initBrick(45,0,0));
+ 		playField.add(bf.initBrick(46,0,0));
+ 		playField.add(bf.initBrick(47,0,0));
+ 		playField.add(bf.initBrick(48,11,1));
+ 		playField.add(bf.initBrick(49,0,5));
+ 		playField.add(bf.initBrick(50,11,1));
+ 		playField.add(bf.initBrick(51,0,0));
+ 		playField.add(bf.initBrick(52,0,2));
+ 		playField.add(bf.initBrick(53,0,0));
+ 		playField.add(bf.initBrick(54,0,0));
+ 		playField.add(bf.initBrick(55,0,5));
+ 		playField.add(bf.initBrick(56,0,0));
+ 		playField.add(bf.initBrick(57,0,0));
+ 		playField.add(bf.initBrick(58,0,3));
+ 		playField.add(bf.initBrick(59,0,2));
+ 		playField.add(bf.initBrick(60,11,1));
+ 		playField.add(bf.initBrick(61,0,0));
+ 		playField.add(bf.initBrick(62,0,0));
+ 		playField.add(bf.initBrick(63,0,0));
+ 		playField.add(bf.initBrick(64,0,0));
+ 		playField.add(bf.initBrick(65,0,0));
+ 		return playField;
+	}
+
+    private static ArrayList<GameEntity> getPlayFieldByIndex8(){
+
+        BrickFactory bf = new BrickFactory();
+        ArrayList<GameEntity> playField = new ArrayList<GameEntity>();
+		playField.add(bf.initBrick(0,6,0));
+ 		playField.add(bf.initBrick(1,3,0));
+ 		playField.add(bf.initBrick(2,3,0));
+ 		playField.add(bf.initBrick(3,3,4));
+ 		playField.add(bf.initBrick(4,3,0));
+ 		playField.add(bf.initBrick(5,3,0));
+ 		playField.add(bf.initBrick(6,3,2));
+ 		playField.add(bf.initBrick(7,3,0));
+ 		playField.add(bf.initBrick(8,3,0));
+ 		playField.add(bf.initBrick(9,3,3));
+ 		playField.add(bf.initBrick(10,6,1));
+ 		playField.add(bf.initBrick(11,3,1));
+ 		playField.add(bf.initBrick(12,6,1));
+ 		playField.add(bf.initBrick(13,3,0));
+ 		playField.add(bf.initBrick(14,3,0));
+ 		playField.add(bf.initBrick(15,3,0));
+ 		playField.add(bf.initBrick(16,3,4));
+ 		playField.add(bf.initBrick(17,3,0));
+ 		playField.add(bf.initBrick(18,3,2));
+ 		playField.add(bf.initBrick(19,3,0));
+ 		playField.add(bf.initBrick(20,6,1));
+ 		playField.add(bf.initBrick(21,3,0));
+ 		playField.add(bf.initBrick(22,3,0));
+ 		playField.add(bf.initBrick(23,3,0));
+ 		playField.add(bf.initBrick(24,6,1));
+ 		playField.add(bf.initBrick(25,3,4));
+ 		playField.add(bf.initBrick(26,3,0));
+ 		playField.add(bf.initBrick(27,3,0));
+ 		playField.add(bf.initBrick(28,3,0));
+ 		playField.add(bf.initBrick(29,3,0));
+ 		playField.add(bf.initBrick(30,6,1));
+ 		playField.add(bf.initBrick(31,3,2));
+ 		playField.add(bf.initBrick(32,3,0));
+ 		playField.add(bf.initBrick(33,3,0));
+ 		playField.add(bf.initBrick(34,3,5));
+ 		playField.add(bf.initBrick(35,3,0));
+ 		playField.add(bf.initBrick(36,6,1));
+ 		playField.add(bf.initBrick(37,3,3));
+ 		playField.add(bf.initBrick(38,3,0));
+ 		playField.add(bf.initBrick(39,3,0));
+ 		playField.add(bf.initBrick(40,6,1));
+ 		playField.add(bf.initBrick(41,3,0));
+ 		playField.add(bf.initBrick(42,3,4));
+ 		playField.add(bf.initBrick(43,3,3));
+ 		playField.add(bf.initBrick(44,3,0));
+ 		playField.add(bf.initBrick(45,3,0));
+ 		playField.add(bf.initBrick(46,3,0));
+ 		playField.add(bf.initBrick(47,3,0));
+ 		playField.add(bf.initBrick(48,6,1));
+ 		playField.add(bf.initBrick(49,3,5));
+ 		playField.add(bf.initBrick(50,6,1));
+ 		playField.add(bf.initBrick(51,3,0));
+ 		playField.add(bf.initBrick(52,3,2));
+ 		playField.add(bf.initBrick(53,3,0));
+ 		playField.add(bf.initBrick(54,3,0));
+ 		playField.add(bf.initBrick(55,3,5));
+ 		playField.add(bf.initBrick(56,3,0));
+ 		playField.add(bf.initBrick(57,3,0));
+ 		playField.add(bf.initBrick(58,3,3));
+ 		playField.add(bf.initBrick(59,3,2));
+ 		playField.add(bf.initBrick(60,6,1));
+ 		playField.add(bf.initBrick(61,3,0));
+ 		playField.add(bf.initBrick(62,3,0));
+ 		playField.add(bf.initBrick(63,3,0));
+ 		playField.add(bf.initBrick(64,3,0));
+ 		playField.add(bf.initBrick(65,3,0));
+ 		return playField;
+	}
+
+    private static ArrayList<GameEntity> getPlayFieldByIndex9(){
+
+        BrickFactory bf = new BrickFactory();
+        ArrayList<GameEntity> playField = new ArrayList<GameEntity>();
+		playField.add(bf.initBrick(0,10,0));
+ 		playField.add(bf.initBrick(1,11,0));
+ 		playField.add(bf.initBrick(2,11,0));
+ 		playField.add(bf.initBrick(3,11,4));
+ 		playField.add(bf.initBrick(4,11,0));
+ 		playField.add(bf.initBrick(5,11,0));
+ 		playField.add(bf.initBrick(6,11,2));
+ 		playField.add(bf.initBrick(7,11,0));
+ 		playField.add(bf.initBrick(8,11,0));
+ 		playField.add(bf.initBrick(9,11,3));
+ 		playField.add(bf.initBrick(10,10,1));
+ 		playField.add(bf.initBrick(11,11,1));
+ 		playField.add(bf.initBrick(12,10,1));
+ 		playField.add(bf.initBrick(13,11,0));
+ 		playField.add(bf.initBrick(14,11,0));
+ 		playField.add(bf.initBrick(15,11,0));
+ 		playField.add(bf.initBrick(16,11,4));
+ 		playField.add(bf.initBrick(17,11,0));
+ 		playField.add(bf.initBrick(18,11,2));
+ 		playField.add(bf.initBrick(19,11,0));
+ 		playField.add(bf.initBrick(20,10,1));
+ 		playField.add(bf.initBrick(21,11,0));
+ 		playField.add(bf.initBrick(22,11,0));
+ 		playField.add(bf.initBrick(23,11,0));
+ 		playField.add(bf.initBrick(24,10,1));
+ 		playField.add(bf.initBrick(25,11,4));
+ 		playField.add(bf.initBrick(26,11,0));
+ 		playField.add(bf.initBrick(27,11,0));
+ 		playField.add(bf.initBrick(28,11,0));
+ 		playField.add(bf.initBrick(29,11,0));
+ 		playField.add(bf.initBrick(30,10,1));
+ 		playField.add(bf.initBrick(31,11,2));
+ 		playField.add(bf.initBrick(32,11,0));
+ 		playField.add(bf.initBrick(33,11,0));
+ 		playField.add(bf.initBrick(34,11,5));
+ 		playField.add(bf.initBrick(35,11,0));
+ 		playField.add(bf.initBrick(36,10,1));
+ 		playField.add(bf.initBrick(37,11,3));
+ 		playField.add(bf.initBrick(38,11,0));
+ 		playField.add(bf.initBrick(39,11,0));
+ 		playField.add(bf.initBrick(40,10,1));
+ 		playField.add(bf.initBrick(41,11,0));
+ 		playField.add(bf.initBrick(42,11,4));
+ 		playField.add(bf.initBrick(43,11,3));
+ 		playField.add(bf.initBrick(44,11,0));
+ 		playField.add(bf.initBrick(45,11,0));
+ 		playField.add(bf.initBrick(46,11,0));
+ 		playField.add(bf.initBrick(47,11,0));
+ 		playField.add(bf.initBrick(48,10,1));
+ 		playField.add(bf.initBrick(49,11,5));
+ 		playField.add(bf.initBrick(50,10,1));
+ 		playField.add(bf.initBrick(51,11,0));
+ 		playField.add(bf.initBrick(52,11,2));
+ 		playField.add(bf.initBrick(53,11,0));
+ 		playField.add(bf.initBrick(54,11,0));
+ 		playField.add(bf.initBrick(55,11,5));
+ 		playField.add(bf.initBrick(56,11,0));
+ 		playField.add(bf.initBrick(57,11,0));
+ 		playField.add(bf.initBrick(58,11,3));
+ 		playField.add(bf.initBrick(59,11,2));
+ 		playField.add(bf.initBrick(60,10,1));
+ 		playField.add(bf.initBrick(61,11,0));
+ 		playField.add(bf.initBrick(62,11,0));
+ 		playField.add(bf.initBrick(63,11,0));
+ 		playField.add(bf.initBrick(64,11,0));
+ 		playField.add(bf.initBrick(65,11,0));
+ 		return playField;
+	}
+
+	public static int getPlayFieldCount() {
+		return 10;
+	}
+
+	public static ArrayList<GameEntity> getLevel(int levelIndex){
+
+		if(levelIndex == 0){return getPlayFieldByIndex0();}
+		if(levelIndex == 1){return getPlayFieldByIndex1();}
+		if(levelIndex == 2){return getPlayFieldByIndex2();}
+		if(levelIndex == 3){return getPlayFieldByIndex3();}
+		if(levelIndex == 4){return getPlayFieldByIndex4();}
+		if(levelIndex == 5){return getPlayFieldByIndex5();}
+		if(levelIndex == 6){return getPlayFieldByIndex6();}
+		if(levelIndex == 7){return getPlayFieldByIndex7();}
+		if(levelIndex == 8){return getPlayFieldByIndex8();}
+		if(levelIndex == 9){return getPlayFieldByIndex9();}
+
+        return null;
     }
 }
