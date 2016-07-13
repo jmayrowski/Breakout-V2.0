@@ -6,6 +6,9 @@ import java.util.ArrayList;
 
 /**
  * Created by Romano on 09.07.2016.
+ *
+ * Klasse zur Erstellung genau 1 vorgefertigten Levels
+ * Wird durch MultiPlayFieldFactory ersetzt
  */
 public class PlayField {
 

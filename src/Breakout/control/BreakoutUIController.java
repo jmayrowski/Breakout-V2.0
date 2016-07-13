@@ -17,7 +17,8 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 
 /**
- * Created by Romano on 11.07.2016.
+ * This project is created by Romano Waschewski and Jasmin Mayrowski
+ * As mandatory libraries we use FXGL v. 0.2.4 and antlr v.4.5.3
  */
 public class BreakoutUIController implements UIController {
 
@@ -51,23 +52,18 @@ public class BreakoutUIController implements UIController {
 
     @Override
     public void init() {
-
-        //labelScore = new Label();
         labelScore.setFont(UIFactory.newFont(18));
         labelLifes.setFont(UIFactory.newFont(18));
     }
 
     public void addLife() {
         int numLives = lives.size();
-
         Texture texture = Breakout.lifeTexture;
         texture.setTranslateX(livesX + 32 * numLives);
         texture.setTranslateY(livesY);
         texture.setFitWidth(16);
         texture.setFitHeight(16);
-
         lives.add(texture);
-        //gameScene.addUINodes(texture);
     }
     public void loseLife(){
 

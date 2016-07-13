@@ -11,10 +11,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import org.jbox2d.dynamics.BodyType;
 
+import java.util.Objects;
+
 import static com.almasb.fxgl.physics.BoundingShape.box;
 
 /**
- * Created by Romano on 06.07.2016.
+ * This project is created by Romano Waschewski and Jasmin Mayrowski
+ * As mandatory libraries we use FXGL v. 0.2.4 and antlr v.4.5.3
  */
 public class WallFactory {
 
@@ -22,13 +25,13 @@ public class WallFactory {
 
     }
     private GameEntity wall;
-    private static PhysicsComponent wallPhysics;
 
     public Entity createWalls(String location, double  width, double height, int i){
 
         BoundingShape Box = box(40,40);
+        PhysicsComponent wallPhysics;
 
-        if(location == "top") {
+        if(Objects.equals(location, "top")) {
 
             GameEntity top = Entities.builder()
                     .type(Breakout.Type.WALL)
@@ -43,13 +46,10 @@ public class WallFactory {
             wallPhysics.setBodyType(BodyType.STATIC);
 
             top.addComponent(wallPhysics);
-
             wall = top;
-
-
         }
 
-        if(location == "left") {
+        if(Objects.equals(location, "left")) {
 
             GameEntity left = Entities.builder()
                         .type(Breakout.Type.WALL)
@@ -63,13 +63,10 @@ public class WallFactory {
 
             left.addComponent(wallPhysics);
             left.addComponent(new CollidableComponent(true));
-
             wall = left;
-
-
         }
 
-        if(location == "right") {
+        if(Objects.equals(location, "right")) {
 
             GameEntity right = Entities.builder()
                         .type(Breakout.Type.WALL)
@@ -83,12 +80,10 @@ public class WallFactory {
 
             right.addComponent(wallPhysics);
             right.addComponent(new CollidableComponent(true));
-
             wall = right;
-
         }
 
-        if(location == "bot"){
+        if(Objects.equals(location, "bot")){
 
             GameEntity bot = Entities.builder()
                     .type(Breakout.Type.GROUND)
@@ -102,11 +97,8 @@ public class WallFactory {
 
             bot.addComponent(wallPhysics);
             bot.addComponent(new CollidableComponent(true));
-
             wall = bot;
         }
-
-
         return wall;
     }
 }

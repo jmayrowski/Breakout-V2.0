@@ -1,8 +1,9 @@
-package Breakout;/**
- * Created by Romano on 01.07.2016.
+package Breakout;
+
+/**
+ * This project is created by Romano Waschewski and Jasmin Mayrowski
+ * As mandatory libraries we use FXGL v. 0.2.4 and antlr v.4.5.3
  */
-
-
 import Breakout.control.BatControl;
 import Breakout.control.BreakoutUIController;
 import com.almasb.ents.Entity;
@@ -28,15 +29,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;
-import java.util.stream.IntStream;
-
 
 public class Breakout extends GameApplication {
 
     private String batTexture;
-    private Texture ballTexture;
-    private String brickTexture;
-    private String wallTexture;
     private String ballColor;
     private Texture bgTexture;
 
@@ -53,7 +49,6 @@ public class Breakout extends GameApplication {
     public static Entity bat;
     public PositionComponent position;
     public GameEntity powerUp;
-
 
     private ArrayList<GameEntity> playField;
 
@@ -85,38 +80,30 @@ public class Breakout extends GameApplication {
             }
     }
 
-
     @Override
     protected void initSettings(GameSettings settings) {
         settings.setTitle("Breakout");
-        settings.setVersion("dev");
+        settings.setVersion("dev 1.0");
         settings.setWidth(1280);
         settings.setHeight(720);
         settings.setIntroEnabled(false);
         settings.setMenuEnabled(false);
-        settings.setApplicationMode(ApplicationMode.DEBUG);
+        settings.setApplicationMode(ApplicationMode.DEVELOPER);
         settings.setMenuStyle(MenuStyle.FXGL_DEFAULT);
     }
 
     @Override
     protected void initAchievements() {
-
         /*Achievement levelAchievement = new Achievement("Rookie", "You finished the first level. Good Job!");
-
         getAchievementManager().registerAchievement(levelAchievement);*/
     }
 
     @Override
     protected void initInput() {
-
         Input input = getInput();
-
         input.addInputMapping(new InputMapping("left", KeyCode.A));
-
         input.addInputMapping(new InputMapping("right", KeyCode.D));
-
         input.addInputMapping(new InputMapping("release ball", KeyCode.SPACE));
-
     }
 
     @OnUserAction(name = "left", type = ActionType.ON_ACTION)
@@ -146,46 +133,31 @@ public class Breakout extends GameApplication {
     @OnUserAction(name = "release ball", type = ActionType.ON_ACTION_END)
     public void releaseBall(){
         BallFactory bf = new BallFactory();
-        if (bf.getBall() != null);
+        if (bf.getBall() == null)
         {
             initBall();
         }
-
     }
 
     @Override
     protected void initAssets() {
-
-        lifeTexture = getAssetLoader().loadTexture("life.png");
-        bgTexture = getAssetLoader().loadTexture("background/background.jpg");
-        ballTexture = getAssetLoader().loadTexture("balls/ball_red.png");
         batTexture = "bats/bat_black.png";
-        brickTexture = "bricks/brick_blue_small.png";
-        wallTexture = "walls/brick_red.png";
-
     }
 
     @Override
     protected void initGame() {
-
         ballColor = "red";
         score = new SimpleIntegerProperty();
-        lifes = new SimpleIntegerProperty(1000);
+        lifes = new SimpleIntegerProperty(100);
         levelCounter = new SimpleIntegerProperty();
-
         gameWorld = getGameWorld();
-
         //getAchievementManager().getAchievementByName("Rookie").achievedProperty().
-
         initWalls();
         initBat();
         initBrick();
         initBackground();
         //initScreenBounds();
-
         getAudioPlayer().playMusic(getAssetLoader().loadMusic("gamemusic.wav"));
-
-
     }
 
     @Override
@@ -200,17 +172,14 @@ public class Breakout extends GameApplication {
         controller.getLabelScore().textProperty().bind(score.asString("Score: [%d]"));
         controller.getLabelLifes().textProperty().bind(lifes.asString("Lives: [%d]"));
 
-        IntStream.range(0, lifes.get())
-                .forEach(i -> controller.addLife());
-
-
         getGameScene().addUINodes(fxmlUI);
     }
 
     private void initBackground() {
-
         GameEntity bg = new GameEntity();
+        BackgroundFactory bf = new BackgroundFactory();
 
+        bgTexture = getAssetLoader().loadTexture(bf.getBackground(levelCounter.get()));
         bgTexture.setFitWidth(getWidth());
         bgTexture.setFitHeight(getHeight());
 
@@ -223,9 +192,7 @@ public class Breakout extends GameApplication {
 
     private void initWalls() {
 
-
         WallFactory wall = new WallFactory();
-
         int i;
 
         for (i = 0; i < 60; i++) {
@@ -247,7 +214,7 @@ public class Breakout extends GameApplication {
             getGameWorld().addEntities(right);
         }
 
-        Entity bot = wall.createWalls("bot", getWidth(), getHeight(), i = 0);
+        Entity bot = wall.createWalls("bot", getWidth(), getHeight(), 0);
         getGameWorld().addEntities(bot);
     }
 
@@ -259,34 +226,32 @@ public class Breakout extends GameApplication {
         BatFactory bf = new BatFactory();
         bat = bf.createBat(ApplicationWidth / 2 - 135 / 2, ApplicationHeight - 32, batTexture);
         getGameWorld().addEntities(bat);
-
         batControl = bat.getControlUnsafe(BatControl.class);
     }
 
     private void initBall() {
-
         //Ball initialisieren
-
         BallFactory bf = new BallFactory();
-        //getGameWorld().addEntities(bf.createBall(getWidth(), getHeight() / 2 - 35 / 2));
         getGameWorld().addEntities(bf.createBall(getWidth() / 2 - 35 / 2, getHeight() / 2 - 35 / 2, ballColor));
-        //ballPhysics = bf.ballPhysics;
     }
 
     private void initBrick() {
-
         playField = new ArrayList<>();
         playField = MultiPlayFieldFactory.getLevel(levelCounter.get());
 
         for (int i = 0; i < 65; i++) {
 
-            if (playField.size() > i) {
-                { getGameWorld().addEntities(playField.get(i));}
+            if ((playField != null ? playField.size() : 0) > i) {
+                    {
+                        getGameWorld().addEntities(playField.get(i));
+
+                    }
             } else break;
         }
-        bricks = new SimpleIntegerProperty(playField.size());
-
-        playField.clear();
+        if (playField != null){
+            bricks = new SimpleIntegerProperty(playField.size());
+            playField.clear();
+        }
 
         getInput().setProcessInput(true);
 
@@ -317,11 +282,8 @@ public class Breakout extends GameApplication {
     }
     private void tutorial(){
 
-        //getInput().setRegisterInput(false);
+        //TODO: Anfangstutorial für Spieler
 
-        /*TutorialStep step1 = new TutorialStep("Press A to move left", Asset.DIALOG_MOVE_LEFT, () -> {
-            getInput().mockKeyPress(KeyCode.A);
-        });*/
     }
 
     private void onBrickRemoved(){
@@ -329,7 +291,7 @@ public class Breakout extends GameApplication {
 
         if(bricks.get() == 0){
             getAudioPlayer().stopAllMusic();
-
+            getAudioPlayer().playSound(getAssetLoader().loadSound("win.mp3"));
             getDisplay().showConfirmationBox("Congratulation!\nYou have won the Game.\nNext Level?", yes -> {
                 if (yes) {
                     nextLevel();
@@ -339,20 +301,19 @@ public class Breakout extends GameApplication {
                 }
             });
         }
+        else{playBounceSound();}
     }
 
     private void nextLevel(){
 
         getInput().setProcessInput(false);
         cleanupLevel();
-
         ballColor = "red";
         score = new SimpleIntegerProperty();
-        lifes = new SimpleIntegerProperty(1000);
-
+        lifes = new SimpleIntegerProperty(10);
         levelCounter.set(levelCounter.get() + 1);
 
-        if (levelCounter.get() <= MultiPlayFieldFactory.getPlayFieldCount()) {
+        if (levelCounter.get() < MultiPlayFieldFactory.getPlayFieldCount()) {
 
             gameWorld = getGameWorld();
 
@@ -362,6 +323,8 @@ public class Breakout extends GameApplication {
             initBrick();
             initBackground();
 
+            getAudioPlayer().stopAllMusic();
+            getAudioPlayer().stopAllSounds();
             getAudioPlayer().playMusic(getAssetLoader().loadMusic("gamemusic.wav"));
         }
         else{
@@ -378,7 +341,7 @@ public class Breakout extends GameApplication {
     private void showGameOver(){
 
         getAudioPlayer().stopAllMusic();
-        //getAudioPlayer().playMusic();
+        getAudioPlayer().playSound(getAssetLoader().loadSound("game_over.mp3"));
         getDisplay().showConfirmationBox("Game Over.\nContinue?", yes -> {
             if (yes) {
                 startNewGame();
@@ -397,43 +360,36 @@ public class Breakout extends GameApplication {
                 .forEach(Entity::removeFromWorld);
     }
 
-    @Override
-    protected void onUpdate(double tpf) {
+    private void playBounceSound(){
 
-}
+        getAudioPlayer().playSound(getAssetLoader().loadSound("tock_one.wav"));
+
+    }
+    @Override
+    protected void onUpdate(double tpf) {}
+
     @Override
     protected void initPhysics() {
-
-
-
         //Kollisionsabfrage zw. Ball und Brick
         PhysicsWorld physics = getPhysicsWorld();
-
         physics.setGravity(0,0.5f);
-
         physics.addCollisionHandler(new CollisionHandler(Type.BALL, Type.BRICK) {
             @Override
             public void onCollisionBegin(Entity a, Entity b) {
-
                 score.set(score.get() + 100);
-
             }
 
             @Override
             public void onCollisionEnd(Entity a, Entity b) {
-
                 b.removeFromWorld();
                 onBrickRemoved();
-
             }
         });
 
         physics.addCollisionHandler(new CollisionHandler(Type.BALL, Type.BRICK_FASTER_POWERUP) {
             @Override
             public void onCollisionBegin(Entity a, Entity b) {
-
                 score.set(score.get() + 100);
-
             }
 
             @Override
@@ -442,21 +398,17 @@ public class Breakout extends GameApplication {
                 position = b.getComponentUnsafe(PositionComponent.class);
                 Point2D p = position.getValue();
                 b.removeFromWorld();
-                onBrickRemoved();
-
                 PowerUpSpawner PUSpawner = new PowerUpSpawner();
                 powerUp = PUSpawner.spawnPowerUp(p, PowerUp.PowerUpType.FASTER, "yellow");
                 getGameWorld().addEntity(powerUp);
-
+                onBrickRemoved();
             }
         });
 
         physics.addCollisionHandler(new CollisionHandler(Type.BALL, Type.BRICK_SLOWER_POWERUP) {
             @Override
             public void onCollisionBegin(Entity a, Entity b) {
-
                 score.set(score.get() + 100);
-
             }
 
             @Override
@@ -465,34 +417,28 @@ public class Breakout extends GameApplication {
                 position = b.getComponentUnsafe(PositionComponent.class);
                 Point2D p = position.getValue();
                 b.removeFromWorld();
-                onBrickRemoved();
-
                 PowerUpSpawner PUSpawner = new PowerUpSpawner();
                 powerUp = PUSpawner.spawnPowerUp(p, PowerUp.PowerUpType.SLOWER, "purple");
                 getGameWorld().addEntity(powerUp);
-
+                onBrickRemoved();
             }
         });
 
         physics.addCollisionHandler(new CollisionHandler(Type.BALL, Type.BRICK_MULTIBALL_POWERUP) {
             @Override
             public void onCollisionBegin(Entity a, Entity b) {
-
                 score.set(score.get() + 100);
-
             }
 
             @Override
             public void onCollisionEnd(Entity a, Entity b) {
-
                 position = b.getComponentUnsafe(PositionComponent.class);
                 Point2D p = position.getValue();
                 b.removeFromWorld();
-                onBrickRemoved();
-
                 PowerUpSpawner PUSpawner = new PowerUpSpawner();
                 powerUp = PUSpawner.spawnPowerUp(p, PowerUp.PowerUpType.MULTIBALL, "green");
                 getGameWorld().addEntity(powerUp);
+                onBrickRemoved();
 
             }
         });
@@ -500,9 +446,7 @@ public class Breakout extends GameApplication {
         physics.addCollisionHandler(new CollisionHandler(Type.BALL, Type.BRICK_BIGGER_POWERUP) {
             @Override
             public void onCollisionBegin(Entity a, Entity b) {
-
                 score.set(score.get() + 100);
-
             }
 
             @Override
@@ -511,21 +455,17 @@ public class Breakout extends GameApplication {
                 position = b.getComponentUnsafe(PositionComponent.class);
                 Point2D p = position.getValue();
                 b.removeFromWorld();
-                onBrickRemoved();
-
                 PowerUpSpawner PUSpawner = new PowerUpSpawner();
                 powerUp = PUSpawner.spawnPowerUp(p, PowerUp.PowerUpType.BIGGER, "blue");
                 getGameWorld().addEntity(powerUp);
-
+                onBrickRemoved();
             }
         });
 
         physics.addCollisionHandler(new CollisionHandler(Type.BALL, Type.BRICK_SMALLER_POWERUP) {
             @Override
             public void onCollisionBegin(Entity a, Entity b) {
-
                 score.set(score.get() + 100);
-
             }
 
             @Override
@@ -534,19 +474,16 @@ public class Breakout extends GameApplication {
                 position = b.getComponentUnsafe(PositionComponent.class);
                 Point2D p = position.getValue();
                 b.removeFromWorld();
-                onBrickRemoved();
-
                 PowerUpSpawner PUSpawner = new PowerUpSpawner();
                 powerUp = PUSpawner.spawnPowerUp(p, PowerUp.PowerUpType.SMALLER, "red");
                 getGameWorld().addEntity(powerUp);
-
+                onBrickRemoved();
             }
         });
         //Kollisionsabfrage zwischen den Zusatzbällen und den Bricks
         physics.addCollisionHandler(new CollisionHandler(Type.MULTIBALL, Type.BRICK) {
             @Override
             public void onCollisionBegin(Entity a, Entity b) {
-
                 //Block wird zerstört und es gibt Punkte, aber es werden keine PowerUps erzeugt
                 score.set(score.get() + 100);
                 b.removeFromWorld();
@@ -557,7 +494,6 @@ public class Breakout extends GameApplication {
         physics.addCollisionHandler(new CollisionHandler(Type.MULTIBALL, Type.BRICK_FASTER_POWERUP) {
             @Override
             public void onCollisionBegin(Entity a, Entity b) {
-
                 //Block wird zerstört und es gibt Punkte, aber es werden keine PowerUps erzeugt
                 score.set(score.get() + 100);
                 b.removeFromWorld();
@@ -569,48 +505,40 @@ public class Breakout extends GameApplication {
         physics.addCollisionHandler(new CollisionHandler(Type.MULTIBALL, Type.BRICK_SLOWER_POWERUP) {
             @Override
             public void onCollisionBegin(Entity a, Entity b) {
-
                 //Block wird zerstört und es gibt Punkte, aber es werden keine PowerUps erzeugt
                 score.set(score.get() + 100);
                 b.removeFromWorld();
                 onBrickRemoved();
-
             }
         });
 
         physics.addCollisionHandler(new CollisionHandler(Type.MULTIBALL, Type.BRICK_MULTIBALL_POWERUP) {
             @Override
             public void onCollisionBegin(Entity a, Entity b) {
-
                 //Block wird zerstört und es gibt Punkte, aber es werden keine PowerUps erzeugt
                 score.set(score.get() + 100);
                 b.removeFromWorld();
                 onBrickRemoved();
-
             }
         });
 
         physics.addCollisionHandler(new CollisionHandler(Type.MULTIBALL, Type.BRICK_BIGGER_POWERUP) {
             @Override
             public void onCollisionBegin(Entity a, Entity b) {
-
                 //Block wird zerstört und es gibt Punkte, aber es werden keine PowerUps erzeugt
                 score.set(score.get() + 100);
                 b.removeFromWorld();
                 onBrickRemoved();
-
             }
         });
 
         physics.addCollisionHandler(new CollisionHandler(Type.MULTIBALL, Type.BRICK_SMALLER_POWERUP) {
             @Override
             public void onCollisionBegin(Entity a, Entity b) {
-
                 //Block wird zerstört und es gibt Punkte, aber es werden keine PowerUps erzeugt
                 score.set(score.get() + 100);
                 b.removeFromWorld();
                 onBrickRemoved();
-
             }
         });
 
@@ -619,17 +547,10 @@ public class Breakout extends GameApplication {
             @Override
             public void onCollisionBegin(Entity a, Entity b) {
                 //Was passiert wenn der Ball den Boden berührt?
-                //Er verschwindet, der Spieler verliert Punkte bzw. Leben
-
-                //score.set(score.get() - 1000);
-                //lifes.set(lifes.get() - 1);
+                //Er verschwindet, der Spieler verliert Punkte bzw. Leben und Paddel wird auf normalgröße zurückgesetzt
                 loseLife();
                 a.removeFromWorld();
-
                 Breakout.batControl.normalizeBatWidth();
-
-
-
             }
         });
 
@@ -655,7 +576,6 @@ public class Breakout extends GameApplication {
                 BallPowerUp bpu = new BallPowerUp();
                 bpu.pickedUp(PowerUp.PowerUpType.FASTER);
                 a.removeFromWorld();
-
             }
         });
 
@@ -669,7 +589,6 @@ public class Breakout extends GameApplication {
                 BallPowerUp bpu = new BallPowerUp();
                 bpu.pickedUp(PowerUp.PowerUpType.SLOWER);
                 a.removeFromWorld();
-
             }
         });
 
@@ -683,7 +602,6 @@ public class Breakout extends GameApplication {
                 BallPowerUp bpu = new BallPowerUp();
                 bpu.pickedUp(PowerUp.PowerUpType.MULTIBALL);
                 a.removeFromWorld();
-
             }
         });
 
@@ -697,7 +615,6 @@ public class Breakout extends GameApplication {
                 BatPowerUp bpu = new BatPowerUp();
                 bpu.pickedUp(PowerUp.PowerUpType.BIGGER);
                 a.removeFromWorld();
-
             }
         });
 
@@ -711,7 +628,6 @@ public class Breakout extends GameApplication {
                 BatPowerUp bpu = new BatPowerUp();
                 bpu.pickedUp(PowerUp.PowerUpType.SMALLER);
                 a.removeFromWorld();
-
             }
         });
 
@@ -768,10 +684,20 @@ public class Breakout extends GameApplication {
             }
         });
 
+        physics.addCollisionHandler(new CollisionHandler(Type.BALL, Type.BAT) {
+            @Override
+            public void onCollisionBegin(Entity a, Entity b) {
+                playBounceSound();
+            }
+        });
+        physics.addCollisionHandler(new CollisionHandler(Type.MULTIBALL, Type.BAT) {
+            @Override
+            public void onCollisionBegin(Entity a, Entity b) {
+                playBounceSound();
+            }
+        });
 
     }
-
-
     public static void main(java.lang.String[] args) {
         launch(args);
     }

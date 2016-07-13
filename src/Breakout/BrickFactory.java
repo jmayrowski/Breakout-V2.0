@@ -3,13 +3,13 @@ package Breakout;
 import com.almasb.fxgl.entity.Entities;
 import com.almasb.fxgl.entity.GameEntity;
 import com.almasb.fxgl.entity.component.CollidableComponent;
-import com.almasb.fxgl.physics.BoundingShape;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import javafx.geometry.Point2D;
 import org.jbox2d.dynamics.BodyType;
 
 /**
- * Created by Romano on 09.07.2016.
+ * This project is created by Romano Waschewski and Jasmin Mayrowski
+ * As mandatory libraries we use FXGL v. 0.2.4 and antlr v.4.5.3
  */
 public class BrickFactory {
 
@@ -54,7 +54,8 @@ public class BrickFactory {
             case 10: textureName = "bricks/brick_silver_small.png";
                 break;
             case 11:  textureName = "bricks/brick_gold_small.png";
-
+                break;
+            default: textureName = "bricks/brick_blue_small.png";
                 break;
         }
 
@@ -91,8 +92,7 @@ public class BrickFactory {
     }
     public GameEntity initBrick(int position, int colorKey){
 
-        BoundingShape Box = BoundingShape.box(90,40);
-
+        //BoundingShape Box = BoundingShape.box(90,40);
         Point2D p = new Point2D((position % 11) * 100 + 95, (position / 11 ) * 45 + 30);
 
         brick = Entities.builder()
@@ -112,24 +112,26 @@ public class BrickFactory {
     }
     public GameEntity initBrick(int position, int colorKey, int brickTypeNumber){
 
-        BoundingShape Box = BoundingShape.box(90,40);
+        Point2D p;
+        if (position <= 65) {
+            //BoundingShape Box = BoundingShape.box(90,40);
+            p = new Point2D((position % 11) * 100 + 95, (position / 11) * 45 + 30);
+        }
+        else {p = new Point2D( 95, 30);}
+            brick = Entities.builder()
+                    .type(getBrickType(brickTypeNumber))
+                    .at(p.getX(), p.getY())
+                    //.bbox(new HitBox("BrickHitBox", Box))
+                    .viewFromTextureWithBBox(chooseTextureColor(colorKey))
+                    .build();
 
-        Point2D p = new Point2D((position % 11) * 100 + 95, (position / 11 ) * 45 + 30);
+            brickPhysics = new PhysicsComponent();
+            brickPhysics.setBodyType(BodyType.STATIC);
 
-        brick = Entities.builder()
-                .type(getBrickType(brickTypeNumber))
-                .at(p.getX(),p.getY())
-                //.bbox(new HitBox("BrickHitBox", Box))
-                .viewFromTextureWithBBox(chooseTextureColor(colorKey))
-                .build();
+            brick.addComponent(brickPhysics);
+            brick.addComponent(new CollidableComponent(true));
+            return brick;
 
-        brickPhysics = new PhysicsComponent();
-        brickPhysics.setBodyType(BodyType.STATIC);
-
-        brick.addComponent(brickPhysics);
-        brick.addComponent(new CollidableComponent(true));
-
-        return brick;
     }
 }
 

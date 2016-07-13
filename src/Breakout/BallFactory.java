@@ -16,20 +16,16 @@ import org.jbox2d.dynamics.FixtureDef;
 import static com.almasb.fxgl.physics.BoundingShape.circle;
 
 /**
- * Created by Romano on 09.07.2016.
+ * This project is created by Romano Waschewski and Jasmin Mayrowski
+ * As mandatory libraries we use FXGL v. 0.2.4 and antlr v.4.5.3
  */
 public class BallFactory {
 
-    public static GameEntity ball;
+    private GameEntity ball;
 
     public GameEntity getBall() {
         return ball;
     }
-
-    public void setBall(GameEntity ball) {
-        this.ball = ball;
-    }
-
 
     public GameEntity multiball;
 
