@@ -87,7 +87,7 @@ public class Breakout extends GameApplication {
         settings.setWidth(1280);
         settings.setHeight(720);
         settings.setIntroEnabled(false);
-        settings.setMenuEnabled(false);
+        settings.setMenuEnabled(true);
         settings.setApplicationMode(ApplicationMode.DEVELOPER);
         settings.setMenuStyle(MenuStyle.FXGL_DEFAULT);
     }
@@ -101,36 +101,36 @@ public class Breakout extends GameApplication {
     @Override
     protected void initInput() {
         Input input = getInput();
-        input.addInputMapping(new InputMapping("left", KeyCode.A));
-        input.addInputMapping(new InputMapping("right", KeyCode.D));
-        input.addInputMapping(new InputMapping("release ball", KeyCode.SPACE));
+        input.addInputMapping(new InputMapping("Move left", KeyCode.A));
+        input.addInputMapping(new InputMapping("Move right", KeyCode.D));
+        input.addInputMapping(new InputMapping("Release ball", KeyCode.SPACE));
     }
 
-    @OnUserAction(name = "left", type = ActionType.ON_ACTION)
+    @OnUserAction(name = "Move left", type = ActionType.ON_ACTION)
     public void left() {
         if(batControl != null){
             batControl.left();
         }
     }
 
-    @OnUserAction(name = "right", type = ActionType.ON_ACTION)
+    @OnUserAction(name = "Move right", type = ActionType.ON_ACTION)
     public void right() {
         if(batControl != null){
             batControl.right();
         }
     }
 
-    @OnUserAction(name = "left", type = ActionType.ON_ACTION_END)
+    @OnUserAction(name = "Move left", type = ActionType.ON_ACTION_END)
     public void stopBat() {
         batControl.stop();
     }
 
-    @OnUserAction(name = "right", type = ActionType.ON_ACTION_END)
+    @OnUserAction(name = "Move right", type = ActionType.ON_ACTION_END)
     public void stopBat2() {
         batControl.stop();
     }
 
-    @OnUserAction(name = "release ball", type = ActionType.ON_ACTION_END)
+    @OnUserAction(name = "Release ball", type = ActionType.ON_ACTION_END)
     public void releaseBall(){
         BallFactory bf = new BallFactory();
         if (bf.getBall() == null)
@@ -148,7 +148,7 @@ public class Breakout extends GameApplication {
     protected void initGame() {
         ballColor = "red";
         score = new SimpleIntegerProperty();
-        lifes = new SimpleIntegerProperty(100);
+        lifes = new SimpleIntegerProperty(10);
         levelCounter = new SimpleIntegerProperty();
         gameWorld = getGameWorld();
         //getAchievementManager().getAchievementByName("Rookie").achievedProperty().
